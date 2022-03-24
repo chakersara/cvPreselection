@@ -17,7 +17,6 @@ resume_app=Blueprint("resume_app",__name__)
 @resume_app.route("/",methods=["post","get"])
 @login_required
 def resumes():
-    
     upload_form=UploadResume()
     if upload_form.validate_on_submit():
         for file in upload_form.files.data:

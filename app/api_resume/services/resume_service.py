@@ -54,28 +54,7 @@ def createResume(path,file,imagefile):
     db.session.commit()
 
 
+def find_resume_by_skills(skills):
+    resumes=Resume.query.all()
 
 
-
-
-
-
-def resLanguage(res,extract):
-    res.language=extract.language
-
-def resCountry(res,extract):
-    res.country=extract.getCountry() 
-
-def resEducation(res,extract):
-    res.educations.extend(extract.getEducation())
-
-def resSkills(res,extract):
-    res.skills.extend(extract.getSkills())
-
-def resEmails(res,extract):
-    emails=[ Email(email=email,resume=res) for email in extract.getEmail()]
-    db.session.add_all(emails)
-
-def resPhones(res,extract):
-    phone=[Phone(number=num,resume=res) for num in extract.getPhoneNumber()]
-    db.session.add_all(phone)

@@ -8,7 +8,6 @@ def query_find_skills(search):
     name_like=lambda w:"{0}{1}{0}".format("%",w)
     if not search.isdigit():
         return Skill.query.filter(Skill.skill_name.like(name_like(search)))
-    print(search)
     return Skill.query.filter(
         or_(
             Skill.skill_name.like(name_like(search)) ,

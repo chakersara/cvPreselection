@@ -57,7 +57,7 @@ def update_admin_by_sa(id,username,email,role,position):
         session['username']=adminEntity.username
         session['email']=adminEntity.email
         session['position']=adminEntity.position
-        db.session.commit()
+    db.session.commit()
 
 
 def update_super_admin(username,email,position,password):

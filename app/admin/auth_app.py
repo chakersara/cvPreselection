@@ -86,8 +86,8 @@ def edit_admin(id):
         modified=False
         adminEntity=get_admin_by_id(id)
         edit_admin=EditAdminForm()
-        """edit_admin.email.data,edit_admin.username.data,edit_admin.position.data=\
-            adminEntity.email,adminEntity.username,adminEntity.position"""
+        edit_admin.email.data,edit_admin.username.data,edit_admin.position.data=\
+            adminEntity.email,adminEntity.username,adminEntity.position
         if edit_admin.validate_on_submit():
             update_admin_by_sa(id=adminEntity.id_admin,username=edit_admin.username.data,\
             email=edit_admin.email.data,role=edit_admin.role.data,position=edit_admin.position.data)

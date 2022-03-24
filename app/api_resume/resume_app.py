@@ -8,6 +8,7 @@ from config import Config
 from models.resumeEntity import Resume,db
 import asyncio
 from time import time
+from sqlalchemy import desc
 from flask import request
 
 
@@ -16,15 +17,13 @@ resume_app=Blueprint("resume_app",__name__)
 @resume_app.route("/",methods=["post","get"])
 @login_required
 def resumes():
+    
     upload_form=UploadResume()
-    start=time()
     if upload_form.validate_on_submit():
         for file in upload_form.files.data:
             resume_add(file)
-    end=time()
-    print(f"{end-start} without async")
-    resumes=Resume.query.all()
-
+    resumes=Resume.query.order_by(desc(Resume.id_resume)).all()
+    db.session.commit()
     return render_template("pages/resumes.html",upload_form=upload_form,\
         resumes=resumes,picture_form=edit_picture())
 

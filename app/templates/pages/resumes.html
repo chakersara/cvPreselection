@@ -67,38 +67,6 @@
 
  
 
-<form action="" method="post" enctype="multipart/form-data">
-
-<div class="item-wrapper one">
-  <div class="item">
-      <form data-validation="true" action="#" method="post" enctype="multipart/form-data">
-          <div class="item-inner">
-              <div class="item-content">
-                  <div class="image-upload mx-auto"> <label style="cursor: pointer;" for="file_upload"> <img src="" alt="" class="uploaded-image">
-                          <div class="h-100">
-                              <div class="dplay-tbl">
-                                  <div class="dplay-tbl-cell"> <i class="fa fa-cloud-upload"></i>
-                                      <h5><b>Choisissez les curriculums vitae à télécharger</b></h5>
-                                      <h6 class="mt-10 mb-70 ">Ou déposer vos fichiers ici</h6>
-                                  </div>
-                              </div>
-                          </div>
-                          {{upload_form.hidden_tag()}}
-                          {{upload_form.files(id="file_upload",class="image-input",data_traget_resolution="image_resolution")}}
-
-                      </label> </div>
-              </div>
-              <!--item-content-->
-              {{upload_form.submit}}
-
-          </div>
-          <!--item-inner-->
-      </form>
-  </div>
-  <!--item-->
-</div>
-<h2 id="numberOfFiles"></h2>
-</form>
 
 <script>
   

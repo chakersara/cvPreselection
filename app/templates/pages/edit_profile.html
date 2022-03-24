@@ -1,0 +1,203 @@
+{% extends "/pages/implem/model.html" %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row flex-lg-nowrap ">
+
+
+    <div class="col">
+      <div class="row">
+        <div class="col mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="e-profile">
+                <div class="row">
+                  <div class="col-12 col-sm-auto mb-3">
+                    <div class="mx-auto" style="width: 140px;">
+                      <div class="d-flex justify-content-center align-items-center rounded"
+                        style="height: 140px; background-color: rgb(233, 236, 239);">
+                        <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;">
+                          <img class="d-block mx-auto" src='{{url_for("static",filename=image)}}' id="pictureShow"
+                            width="140px" height="140px">
+
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3 pl-2">
+                    <div class="text-center text-sm-left mb-2 mb-sm-0">
+                      <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap text-capitalize">{{username}}
+                      </h4>
+                      <p class="mb-0">{{email}}</p>
+                      <div class="mt-2">
+                        <button data-toggle="modal" data-target="#editPic" class="btn btn-dark mb-2"
+                          style="color:white;background-color: rgb(24, 24, 36);" type="button">
+                          <i class="fa fa-fw fa-camera"></i>
+                          <span>Changer de photo</span>
+
+                        </button>
+                        <div>
+                          {% if modification %}
+                          <small >
+                            <i class="fa fa-check text-success" style="font-size: 17px;" aria-hidden="true"></i>
+                            Modification du compte effectuée avec succès!
+                          </small>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center text-sm-right">
+                      <span class="badge badge-secondary">{{role}}</span>
+                    </div>
+                  </div>
+                </div>
+                <ul class="nav nav-tabs">
+                  <li class="nav-item"><a href="" class="active nav-link">Paramètres</a></li>
+                </ul>
+                <div class="tab-content pt-3">
+                  <div class="tab-pane active">
+                    <form class="form" novalidate="" method="post" enctype="multipart/form-data">
+                      {{edit_form.hidden_tag()}}
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Nom d'utilisateur</label>
+                                {{edit_form.username(value=username,placeholder=username,class="form-control")}}
+                                {% for error in edit_form.username.errors %}
+                              
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                              
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Email</label>
+                                {% if session.role =="admin" %}
+                                {{edit_form.email(value=email,
+                                  disabled=True,
+                                  type="email",class="form-control")}}
+                                {%else%}
+                                {{edit_form.email(value=email,
+                                 type="email",class="form-control")}}
+                                {%endif%}
+                                
+                                {% for error in edit_form.email.errors %}
+                              
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Position de travail</label>
+                                {% if session.role =="admin" %}
+                                {{edit_form.position(class="form-control",placeholder=position,value=position,disabled=True)}}
+                                {% else %}
+                                {{edit_form.position(class="form-control",placeholder=position,value=position)}}
+
+                                {% endif %}
+                                {% for error in edit_form.position.errors %}
+                              
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Mot de passe</label>
+                                {{edit_form.password(class="form-control",placeholder="••••••")}}
+                                {% for error in edit_form.password.errors %}
+                              
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                            </div>
+                            
+                          </div>
+
+
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-12 col-sm-6 mb-3">
+                          <div class="mb-1"><b>Changer de mot de passe</b></div>
+                          <p class="card-description" style='font-size:12px'>Remplissez ces champs uniquement si vous
+                            souhaitez modifier votre mot de passe.</p>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Nouveau mot de passe</label>
+                                {{edit_form.newPassword(class="form-control",placeholder="••••••")}}
+                                {% for error in edit_form.newPassword.errors %}
+                              
+                                <small class="form-text text-danger float-right mb-2 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Confirmer <span class="d-none d-xl-inline">le mot de passe</span></label>
+                                {{edit_form.confirmPassword(class="form-control",placeholder="••••••")}}
+                                {% for error in edit_form.confirmPassword.errors %}
+                              
+                                <small class="form-text text-danger float-right mb-2 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col d-flex justify-content-end">
+                          {{edit_form.submit(class="btn btn-primary")}}
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

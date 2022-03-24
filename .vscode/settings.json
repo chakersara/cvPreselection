@@ -1,0 +1,10 @@
+{
+    "cSpell.words": [
+        "habibi",
+        "wtforms"
+    ],
+    "python.analysis.extraPaths": [
+        "./category",
+        "./database"
+    ]
+}

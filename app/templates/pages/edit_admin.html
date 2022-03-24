@@ -1,0 +1,200 @@
+{% extends "/pages/implem/model.html" %}
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row flex-lg-nowrap ">
+
+
+    <div class="col">
+      <div class="row">
+        <div class="col mb-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="e-profile">
+                <div class="row">
+                  <div class="col-12 col-sm-auto mb-3">
+                    <div class="mx-auto" style="width: 140px;">
+                      <div class="d-flex justify-content-center align-items-center rounded"
+                        style="height: 140px; background-color: rgb(233, 236, 239);">
+                        <span style="color: rgb(166, 168, 170); font: bold 8pt Arial;">
+                          {% set image_path="images/users/"+adminEntity.image %}
+                          <img class="d-block mx-auto" src='{{url_for("static",filename=image_path)}}' id="pictureShow"
+                            width="140px" height="140px">
+
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3 pl-2">
+                    <div class="text-center text-sm-left mb-2 mb-sm-0">
+                      <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap text-capitalize">{{adminEntity.username}}
+                      </h4>
+                      <p class="mb-0">{{adminEntity.email}}</p>
+                      <div class="mt-2">
+                        <div>
+                          {% if modification %}
+                          <small>
+                            <i class="fa fa-check text-success" style="font-size: 17px;" aria-hidden="true"></i>
+                            Modification du compte effectuée avec succès!
+                          </small>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-center text-sm-right">
+                      <span class="badge badge-secondary">
+                        {% if adminEntity.role== "admin" %}
+                        Administrateur
+                        {%else%}
+                        Super Administrateur
+                        {%endif%}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <ul class="nav nav-tabs">
+                  <li class="nav-item"><a href="" class="active nav-link">Paramètres</a></li>
+                </ul>
+                <div class="tab-content pt-3">
+                  <div class="tab-pane active">
+                    <form class="form" novalidate="" method="post" enctype="multipart/form-data">
+                      {{edit_admin_form.hidden_tag()}}
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Nom d'utilisateur</label>
+                  
+                                {% if session.id==adminEntity.id_admin %}
+                                {{edit_admin_form.username(value=adminEntity.username,placeholder=username,class="form-control")}}
+                                {%else%}
+                                {{edit_admin_form.username(value=adminEntity.username,placeholder=username,class="form-control",disabled="true")}}
+                                {%endif%}
+                                {% for error in edit_admin_form.username.errors %}
+
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Email</label>
+
+                                {{edit_admin_form.email(value=adminEntity.email,
+                                 type="email",class="form-control")}}
+
+                                {% for error in edit_admin_form.email.errors %}
+
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Position de travail</label>
+
+                                {{edit_admin_form.position(class="form-control",placeholder=position,value=adminEntity.position)}}
+
+                                {% for error in edit_admin_form.position.errors %}
+
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+                              </div>
+                            </div>
+                            <div class="col">
+                              <div class="form-group">
+                                <label>Role</label>
+                                
+                                
+                                {% for radio in edit_admin_form.role %}
+                                <div class="form-check" style="display: flex;align-items: center;">
+                                  {% if radio.data==adminEntity.role%}
+                                  {{radio(class="mr-2",checked=true)}}
+                                  {%else %}
+                                  {{radio(class="mr-2")}}
+                                  {%endif%}
+                                {{radio.label()}}
+                                </div>
+                                
+                                {%endfor%}
+                                {% for error in edit_admin_form.role.errors %}
+
+                                <small class="form-text text-danger float-right mb-1 ">
+                                  * {{ error}}
+                                </small>
+                                {% endfor %}
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                              <label class="pb-0">Mot de passe</label><br>
+                              {{edit_admin_form.password(class="form-control",placeholder="••••••")}}
+                              {% for error in edit_admin_form.password.errors %}
+
+                              <small class="form-text text-danger float-right mb-1 ">
+                                * {{ error}}
+                              </small>
+                              {% endfor %}
+                            </div>
+                          </div>
+
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col d-flex justify-content-end mt-3">
+                          <a href="{{url_for('auth_app.admins')}}" class="btn btn-light">Annuler</a>
+
+                          {{edit_admin_form.submit(class="btn btn-primary")}}
+
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "pages/implem/model.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-sm-flex align-items-center mb-4">
+          <h4 class="card-title mb-sm-0">Adminstrateurs</h4>
+          <span class="ml-1">
+            <small> ({{admins|length}})</small>
+
+          </span>
+          <a href="{{url_for('auth_app.add_admin')}}" class="text-success  font-weight-bold ml-auto mb-3 mb-sm-0"
+            style="font-size: 13px;">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Ajouter un administrateur</a>
+        </div>
+        <div class="table-responsive border rounded p-1">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="font-weight-bold">Nom d'utilisateur</th>
+                <th class="font-weight-bold">Email</th>
+                <th class="font-weight-bold">Position de travail</th>
+                <th class="font-weight-bold">Rôle</th>
+                <th class="font-weight-bold">Modifier</th>
+                <th class="font-weight-bold">Supprimer</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for admin in admins %}
+              <tr>
+                <td class="text-capitalize">
+                  <img class="img-sm rounded-circle mr-1" style="height: 40px;width: 40px;"
+                    src="{{url_for('static',filename='images/users/'+admin.image)}}" alt="profile image">
+                  {{admin.username}}
+                  {% if admin.username==username %} <small class="text-muted">(Vous)</small> {% endif %}
+                </td>
+                <td>{{admin.email}}</td>
+                <td>{{admin.position}}</td>
+                <td>
+                  {%if admin.role == "super_admin" %} Super Administrateur
+                  {%else%} Administrateur {%endif%}
+                </td>
+                <td>
+                  <div class="text-center">
+                      <label class="badge p-1 text-white " style="background-color: #74c577;">
+                        <a href="{{ url_for('auth_app.edit_admin',id=admin.id_admin)}}"
+                        class="py-2"
+                          style="background-color: transparent;border: 0; color: inherit;"><i
+                            class="fas fa-pen" aria-hidden="true"></i><a>
+
+
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <label class="badge p-1 text-white " style="background-color: #e75d74;">
+                      <button type='button' data-toggle="modal" data-target="#delete_confirm{{admin.id_admin}}"
+                        style="padding:1px;background-color: transparent;border: 0; color: inherit;"><i
+                          class="fas fa-trash-alt" aria-hidden="true"></i></a></button>
+                  </div>
+
+                  <!-- Modal -->
+
+                  <form action="{{ url_for('auth_app.delete_admin',id=admin.id_admin) }}" method=post class="modal fade"
+                    id="delete_confirm{{admin.id_admin}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+
+                        <div class="modal-body text-center">
+                          Etes-vous sûr de vouloir supprimer l'utilisateur <span
+                            class="font-weight-bold">{{admin.username|capitalize}}</span> ?
+                        </div>
+                        <div class="modal-footer p-1">
+                          <input type=hidden value="{{ admin.id_admin}}" name="admin_del" />
+
+                          <button type="button" class="btn btn-sm btn-dark" data-dismiss="modal">Annuler</button>
+                          <button type="submit" class="btn btn-sm btn-success">Oui</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </td>
+
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

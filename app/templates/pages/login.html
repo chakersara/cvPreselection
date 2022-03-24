@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include "pages/implem/head.html" %}
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth">
+        <div class="row flex-grow">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left p-5">
+              <!--img style="width:45px ;"src="{{url_for('static',filename='images/scan-mini-white.png')}}" alt=""-->
+
+              <h4 class="">Bienveue!</h4>
+              <h6 class="font-weight-light">Connectez-vous pour continuer.</h6>
+              <form class="pt-3" action="" method="post">
+
+                {{form.hidden_tag()}}
+                {% for message in form.email.errors %}
+                <small class="form-text text-danger float-left mb-1 ">
+
+                  * {{message}}
+                </small>
+                {% endfor %}
+                <div class="form-group">
+                  {{form.email(class="form-control form-control-lg",placeholder="Email",type="email")}}
+                </div>
+
+
+                {% for message in form.password.errors %}
+                <small class="form-text text-danger float-left mb-1 ">
+
+                  * {{message}}
+                </small>
+                {% endfor %}
+
+                <div class="form-group">
+                  {{form.password(class="form-control form-control-lg",placeholder="Mot de passe")}}
+                </div>
+
+                <div class="my-2 d-flex justify-content-between align-items-center">
+
+                  <a href="#" class="auth-link" style="color: rgb(138, 136, 136);font-size:12px;">Mot de passe
+                    oublié?</a>
+                </div>
+                <div class="mt-3">
+                  {{form.submit(class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" )}}
+
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{{url_for('static',filename='vendors/js/vendor.bundle.base.js')}}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="{{url_for('static',filename='js/off-canvas.js')}}"></script>
+  <script src="{{url_for('static',filename='js/misc.js')}}"></script>
+  <!-- endinject -->
+</body>
+
+</html>

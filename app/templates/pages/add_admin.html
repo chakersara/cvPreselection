@@ -1,0 +1,136 @@
+{% extends "pages/implem/model.html" %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 grid-margin stretch-card mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-0">Ajouter un administrateur</h4>
+                <small class="card-description "> Attention : Le super administrateur a le droit de consulter et de
+                    gérer la
+                    liste des administrateurs tant que l'administrateur ordinaire ne le peut pas ! </small>
+
+                {% if added %}
+                <div class="alert alert-success mt-2" role="alert">
+                    <small>
+                        <i class="fa fa-check text-success" style="font-size: 17px;" aria-hidden="true"></i>
+                    Administrateur ajouté avec succès!
+                    </small>
+                    
+                </div>
+
+                {% endif %}
+
+                <form class="forms-sample mt-3" method="post" enctype="multipart/form-data">
+                    {{addForm.hidden_tag()}}
+
+                    <div class="form-group row">
+                        <div class="col-12 py-2">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Nom d'utilisateur</label>
+                                    {{addForm.username(class="form-control",placeholder="Nom d'utilisateur")}}
+                                    {% for error in addForm.username.errors %}
+                                    <small class="form-text text-danger  mb-1 ">
+                                        * {{ error}}
+                                    </small>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Email</label>
+
+                                    {{addForm.email(class="form-control",placeholder="Email")}}
+                                    {% for error in addForm.email.errors %}
+
+                                    <small class="form-text text-danger mb-1 ">
+                                        * {{ error}}
+                                    </small>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 py-2">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Position de travail</label>
+                                    {{addForm.position(class="form-control",placeholder="Position de travail")}}
+                                    {% for error in addForm.position.errors %}
+
+                                    <small class="form-text text-danger  mb-1 ">
+                                        * {{ error}}
+                                    </small>
+                                    {% endfor %}
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label>Role</label>
+
+                                    {{addForm.role(class="form-group row")}}
+                                    {% for error in addForm.role.errors %}
+
+                                    <small class="form-text text-danger  mb-1 ">
+                                        * {{ error}}
+                                    </small>
+                                    {% endfor %}
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 py-2">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Mot de passe</label>
+
+                                    {{addForm.password(class="form-control",placeholder="••••••")}}
+                                    {% for error in addForm.password.errors %}
+
+                                    <small class="form-text text-danger mb-1 ">
+                                        * {{ error}}
+                                    </small>
+                                    {% endfor %}
+
+
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label>Confirmer le mot de passe</label>
+
+                                    {{addForm.confirmPassword(class="form-control",placeholder="••••••")}}
+                                    {% for error in addForm.confirmPassword.errors %}
+
+                                    <small class="form-text text-danger  mb-1 ">
+                                        * {{ error}}
+                                    </small>
+                                    {% endfor %}
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{addForm.submit(class="btn btn-primary mr-2")}}
+                    <a href="{{url_for('auth_app.admins')}}" class="btn btn-light">Cancel</a>
+                </form>
+                <script defer>
+                    let li_roles = document.querySelector('ul#role').querySelectorAll('li');
+                    li_roles.forEach(li => {
+                        li.classList.add("col-6")
+                        li.querySelector("input").classList.add('form-check-input')
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}

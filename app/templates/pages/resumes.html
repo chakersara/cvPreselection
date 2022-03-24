@@ -1,0 +1,175 @@
+{% extends "pages/implem/model.html" %}
+
+
+{% block content %}
+
+<style>
+  .item .item-content {
+    padding: 30px 35px
+}
+
+.image-upload {
+    width: 90%;
+    height: 180px;
+    border: 1px dashed #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    position: relative;
+    text-align: center;
+    background: #f8f8f9;
+    color: #666;
+    overflow: hidden
+}
+
+.item-wrapper form img {
+    margin-bottom: 20px;
+    width: auto;
+    height: auto;
+    max-height: 400px;
+    width: auto;
+    border-radius: 5px;
+    overflow: hidden
+}
+
+.image-upload img {
+    height: 100% !important;
+    width: auto !important;
+    border-radius: 0px;
+    margin: 0 auto
+}
+
+.image-upload i {
+    font-size: 3.2em;
+    margin-bottom: 10px;
+    color: #ccc
+}
+
+.image-upload input {
+    cursor: pointer;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.item-wrapper input {
+    height: 43px;
+    line-height: 43px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px
+}
+</style>
+
+
+ 
+
+<form action="" method="post" enctype="multipart/form-data">
+
+<div class="item-wrapper one">
+  <div class="item">
+      <form data-validation="true" action="#" method="post" enctype="multipart/form-data">
+          <div class="item-inner">
+              <div class="item-content">
+                  <div class="image-upload mx-auto"> <label style="cursor: pointer;" for="file_upload"> <img src="" alt="" class="uploaded-image">
+                          <div class="h-100">
+                              <div class="dplay-tbl">
+                                  <div class="dplay-tbl-cell"> <i class="fa fa-cloud-upload"></i>
+                                      <h5><b>Choisissez les curriculums vitae à télécharger</b></h5>
+                                      <h6 class="mt-10 mb-70 ">Ou déposer vos fichiers ici</h6>
+                                  </div>
+                              </div>
+                          </div>
+                          {{upload_form.hidden_tag()}}
+                          {{upload_form.files(id="file_upload",class="image-input",data_traget_resolution="image_resolution")}}
+
+                      </label> </div>
+              </div>
+              <!--item-content-->
+              {{upload_form.submit}}
+
+          </div>
+          <!--item-inner-->
+      </form>
+  </div>
+  <!--item-->
+</div>
+<h2 id="numberOfFiles"></h2>
+</form>
+
+<script>
+  
+function files_info(input){
+console.log("kharia")
+}
+
+$(document).ready(function(){
+    $('#file_upload').change(function(){
+        var files = $(this)[0].files;
+        console.log(files)
+});
+
+
+</script>
+
+<form action="" method="post" enctype="multipart/form-data">
+  {{upload_form.hidden_tag()}}
+  {% for error in upload_form.files.errors %}
+  {{error}}
+  {% endfor %}
+  {{upload_form.files}}
+  {{upload_form.submit}}
+
+</form>
+
+
+
+
+<div class="row mx-auto">
+{% for resume in resumes %}
+
+<div class="d-flex p-0 mb-5 text-center align-items-center " >
+  <div style="width:180px; min-width: 180px;overflow:hidden;margin:0;cursor: pointer;" class="bg-white m-3">
+    <button data-toggle="modal" data-target="#openCV{{resume.id_resume}}" style="border: none;background-color:transparent;padding: 0;">
+
+        <img class="card-img-top" src="{{url_for('static',filename='resumes/img/'+resume.path_image)}}"
+        style="display:block;width:100%;margin:0  0 -70.875% 0; " >
+      
+      <div class="p-2 bg-white d-block pl-2" style="height:40px;position: absolute;width:180px;font-size: 13px;">
+        <i class="fa fa-file-pdf-o text-danger my-1" aria-hidden="true"></i>
+        Voir le CV
+      </div>
+    </button>
+
+  </div>
+</div>
+
+<div class="row m-0 p-0 b-0">
+  <div class="row ">
+    <div id="openCV{{resume.id_resume}}" class="modal fade mt-0 pt-0  " role="dialog" style="border: 0;">
+      <div class="modal-dialog modal-lg mt-0 pt-0 ">
+
+        <div class="modal-content" style="background-color: transparent;border:none;">
+          <div class="modal-body">
+
+            <iframe src="{{url_for('static',filename='resumes/pdf_docx/'+resume.path_file)}}" width="100%"
+              height="600px">
+            </iframe>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{%endfor%}
+</div>
+
+{%endblock%}

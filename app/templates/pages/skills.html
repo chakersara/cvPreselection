@@ -1,0 +1,123 @@
+{% extends "/pages/implem/model.html" %}
+
+{% block head %}
+{{super()}}
+<style>
+  .pagination {
+    color: red;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+  <div class="col-lg-8 offset-2 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Liste des compétences</h4>
+        <p class="card-description"> Add class <code>.table-hover</code>
+        </p>
+
+        <form class=" float-right">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control float-right py-0 my-0 " style="height: 30px;"
+              placeholder="Numéro ou nom de compétence" aria-label="Recipient's username"
+              aria-describedby="basic-addon2">
+            <div class="input-group-append p-0  float-right" style="height: 30px;">
+              <button class="btn btn-sm text-white" type="submit" style="background-color: rgba(145, 145, 145, 0.349);">
+                <i class="fa fa-search" aria-hidden="true" style="font-size: 15px;"></i>
+
+              </button>
+            </div>
+          </div>
+
+        </form>
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-center">
+              <th>Numéro</th>
+              <th>Compétence</th>
+              <th>Modifier</th>
+              <th>Supprimer</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+
+            {% for skill in skills.items %}
+            <tr class="text-center">
+              <td class="text-center">{{skill.id_skill}}</td>
+              <td>{{skill.skill_name}}</td>
+              <td class=" text-center">
+                <label class="badge text-white p-1" style="background-color: #74c577;">
+                  <i class="fas fa-pen"></i>
+                </label>
+              </td>
+              <td class="text-center ">
+                <label class="badge p-1 text-white" style="background-color: #e75d74;">
+                  <a href="/skills/delete/{{skill.id_skill}}" style="color:inherit;"><i
+                      class="fas fa-trash-alt"></i></a></label>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!-- Pagination Links-->
+      
+        <nav class="text-right pagination mt-3 ">
+          <div class=" ">
+            <span>
+              <ul class="pagination float-right">
+                <li class="page-item">
+                  <a href="{{ url_for('skills_app.skills_index', page=skills.prev_num) }}" class="page-link 
+                {% if skills.page == 1 %}disabled{% endif %}">
+                    &laquo;
+                  </a>
+                </li>
+                {% for page_num in skills.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}{% if page_num %}
+                <!-- Check for the active page and set the link to "Active"-->
+                {% if skills.page == page_num %}
+                <li class="page-item active">
+                  <a href="{{ url_for('skills_app.skills_index', page=page_num) }}" class="page-link">
+                    {{ page_num }}
+                  </a>
+                </li>
+
+
+                {% else %}
+                <li class="page-item ">
+                  <a href="{{ url_for('skills_app.skills_index', page=page_num) }}" class="page-link">
+                    {{ page_num }}
+                  </a>
+                </li>
+                {% endif %}
+                {% else %}
+                <li>
+                  ...
+                </li>
+                {% endif %}
+                {% endfor %}
+                <li class="page-item {% if skills.page == skills.pages %}disabled{% endif %}">
+                  <a href="{{ url_for('skills_app.skills_index', page=skills.next_num) }}" class="page-link">
+                    &raquo;
+                  </a>
+                </li>
+
+
+              </ul>
+            </span>
+          </div>
+        </nav>
+
+        <p class="text-right mt-2 float-right">
+          Page {{ skills.page }} de {{ skills.pages }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

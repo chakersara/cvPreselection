@@ -1,0 +1,63 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+      <li class="nav-item nav-profile">
+        <a href="{{url_for('index')}}" class="nav-link">
+          <div class="profile-image">
+            <img class="img-xs rounded-circle" src="{{url_for('static',filename=image)}}" alt="profile image">
+            <div class="dot-indicator bg-success"></div>
+          </div>
+          <div class="text-wrapper">
+            <p class="profile-name text-capitalize">{{username}}</p>
+            <p class="designation">{{role}}</p>
+          </div>
+          
+        </a>
+      </li>
+      <li class="nav-item nav-category">
+        <span class="nav-link">Dashboard</span>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('index')}}">
+          <span class="menu-title">Dashboard</span>
+          <i class="icon-screen-desktop menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item nav-category"><span class="nav-link">circualem vitae</span></li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('resume_app.resumes')}}">
+          <span class="menu-title text-capitalize">circualem vitae</span>
+          <i class="icon-book-open menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('skills_app.skills_index')}}">
+          <span class="menu-title">Compétences</span>
+          <i class="fa fa-gears menu-icon" aria-hidden="true"></i>
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="pages/charts/chartist.html">
+          <span class="menu-title">Charts</span>
+          <i class="icon-chart menu-icon"></i>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="pages/tables/basic-table.html">
+          <span class="menu-title">Tables</span>
+          <i class="icon-grid menu-icon"></i>
+        </a>
+      </li>
+      {%if session['role']=="super_admin"%}
+      <li class="nav-item nav-category"><span class="nav-link">Administrateurs</span></li>
+      <li class="nav-item">
+        <a class="nav-link"  href="{{url_for('auth_app.admins')}}" >
+          <span class="menu-title">Administrateurs</span>
+          <i class="fa fa-user-secret menu-icon" aria-hidden="true"></i>
+        </a>
+       
+      </li>
+      {%endif%}
+     
+    </ul>
+  </nav>

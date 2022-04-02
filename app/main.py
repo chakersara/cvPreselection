@@ -1,7 +1,7 @@
 import asyncio
 from pyexpat import model
 from flask import Flask,render_template,session
-from validators import email
+#from validators import email
 from api_prediction.api_app import api_app
 from api_skills.skills_app import skills_app
 from admin.auth_app import auth_app

@@ -106,26 +106,9 @@ class ResExtract:
         educ=[]
         self.__addEducation(educ,"Ingénierie","ingéni.* | engineer*",res)
         self.__addEducation(educ,"Licence","bachelor.* | b?[.]s|licence",res)
-        self.__addEducation(educ,"Mastère","mast[eéè]re | master.*| m?[.]s",res)    
-        return educ
-
-        
-    """def getCategory(self):
-        return predict(self.text)"""
-
-    """async def getAllDetails(self):
-        start=time()
-        input_coroutines = [self.getCountry(), self.getEducation(),self.getEmail(),self.getPhoneNumber(),
-        self.getSkills(),self.m]
-        res = await asyncio.gather(*input_coroutines, return_exceptions=True)
-        end=time()
-        print(end-start)
-        return res"""
-
-
-
-
-        
+        self.__addEducation(educ,"Mastère","mast[eéè]re | master.*| m?[.]s",res)
+        self.__addEducation(educ,"Doctorat","doctora.* | phd",res)    
+        return educ 
         
 if __name__=="__main__":
     a=ResExtract("/home/sarra/Documents/projects/projetGlsi2/app/static/resumes/pdf_docx/Chaker_Sarra.pdf")

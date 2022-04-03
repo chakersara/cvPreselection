@@ -24,7 +24,8 @@ app.register_blueprint(skills_app,url_prefix="/skills")
 app.register_blueprint(auth_app,url_prefix="/admin")
 app.register_blueprint(resume_app,url_prefix="/resume")
 
-
+with app.app_context():
+    db.create_all()
 
 
 @app.route("/create")

@@ -59,16 +59,17 @@ def createResume(path, file, imagefile):
 
 
 def get_all_education_cvs():
-    educ=[]
+    educ = []
     for resume in Resume.query.all():
         educ.extend(resume.educations)
     return [(ed.degree, ed.degree) for ed in set(educ)]
 
 
 def get_all_countries_cvs():
-    return list(map(lambda count:(count[0],count[0]),Resume.query.\
-        with_entities(Resume.country.distinct()).\
-        filter(Resume.country != None).all()))
+    return list(map(lambda count: (count[0], count[0].capitalize()),
+                    Resume.query.with_entities(Resume.country.distinct()).
+                    filter(Resume.country != None)
+                    .all()))
 
 
 def get_all_skills_cvs():
@@ -76,3 +77,10 @@ def get_all_skills_cvs():
     for resume in Resume.query.all():
         skills.extend(resume.skills)
     return [(skill.skill_name, skill.skill_name) for skill in set(skills)]
+
+
+def get_languages():
+    return list(map(lambda lang: ("fr", "Français") if lang[0] == "fr"
+                    else (("en", "Anglais") if lang[0] == "en" else (lang[0], lang[0])),
+                    Resume.query.with_entities(Resume.language.distinct()).
+                    filter(Resume.language != None).all()))

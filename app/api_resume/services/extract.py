@@ -106,8 +106,9 @@ class ResExtract:
         educ=[]
         self.__addEducation(educ,"Ingénierie","ingéni.* | engineer*",res)
         self.__addEducation(educ,"Licence","bachelor.* | b?[.]s|licence",res)
-        self.__addEducation(educ,"Mastère","mast[eéè]re | master.*| m?[.]s",res)
-        self.__addEducation(educ,"Doctorat","doctora.* | phd",res)    
+        self.__addEducation(educ,"Mastère","mast[eéè]re | master.*| m?[.]s | m[1-2]",res)
+        self.__addEducation(educ,"Doctorat","doctora.* | phd",res)
+        self.__addEducation(educ,"Préparatoire","pr[eéè]paratoire.*",res) 
         return educ 
         
 if __name__=="__main__":

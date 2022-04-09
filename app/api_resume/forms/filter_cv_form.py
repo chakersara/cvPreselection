@@ -1,6 +1,6 @@
 from typing import List
 from flask_wtf import FlaskForm
-from wtforms import SelectMultipleField, widgets
+from wtforms import SelectMultipleField, widgets,SubmitField
 
 
 class MultiCheckboxField(SelectMultipleField):
@@ -9,6 +9,8 @@ class MultiCheckboxField(SelectMultipleField):
 
 
 class FilterCvForm(FlaskForm):
+    class Meta:
+        csrf = False
     def __init__(self, langue_choices, education_choices, skills_choices, country_choices, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.langue.choices = langue_choices
@@ -20,3 +22,4 @@ class FilterCvForm(FlaskForm):
     education = MultiCheckboxField("education", choices=[])
     skill = MultiCheckboxField("skill", choices=[])
     country = MultiCheckboxField("country", choices=[])
+    submit=SubmitField("Filtrer")

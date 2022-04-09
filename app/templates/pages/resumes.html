@@ -346,11 +346,11 @@
     background-color: #48b83ee8
   }
 
-  img {
+  /** img {
     width: 100px;
     height: 150px;
-    object-fit: fill
-  }
+    object-fit:fill
+  }**/
 
   .clear {
     clear: both
@@ -393,10 +393,7 @@
       width: 65%
     }
 
-    .filter,
-    #mobile-filter {
-      display: none
-    }
+
 
     .h3+.ml-auto {
       margin: 0
@@ -410,10 +407,6 @@
 
     .h3 {
       font-size: 1.3rem
-    }
-
-    #sidebar2 {
-      display: none
     }
 
     #products {
@@ -451,177 +444,242 @@
       clear: both
     }
   }
-  .details_cv{
-    margin-top: 20px;
-    padding: 40px 20px
+
+  .cv_modal .container {
+    display: flex;
+    justify-content: center;
+    margin-top: 200px;
+    background: transparent
   }
-  .details_cv .box {
-    padding: 40px 30px;
-    transition: all .4s ease-in-out;
-    cursor: pointer
-}
-.details_cv .box:hover {
-    box-shadow: 2px 2px 10px #a5a5a5;
-    transform: scale(1.03)
-}
-.details_cv a:hover {
-    text-decoration: none
-}
 
-.details_cv img {
-    object-fit: contain;
-    width: 35px;
-    height: 35px
-}
+  .cv_modal .trigger {
+    background-color: black;
+    color: red
+  }
 
-.details_cv p.text-muted {
-    margin: 0;
-    font-size: 0.9rem
-}
+  .cv_modal .modal,
+  .cv_modal .fade,
+  .cv_modal .show {
+    background-color: lightgray;
+    padding-left: 15px;
+    padding-right: 15px
+  }
 
-b {
-    font-size: 1.12rem
-}
+  .cv_modal .modal-content {
+    background: transparent;
+    border: none;
+    padding: 0 19px
+  }
 
-.details_cv .rounded-circle {
-    width: 60px;
-    height: 60px;
-    background-color: red
-}
+  .cv_modal .close {
+    position: relative;
+    top: 48px;
+    left: 13px;
+    z-index: 1;
+    font-size: 30px;
+    font-weight: 100;
+    line-height: 1;
+    color: gray
+  }
 
-.details_cv .blue {
-    background-color: #bedcfa;
-    transform: rotateZ(90deg)
-}
+  .cv_modal .modal-header {
+    border: none
+  }
 
-.details_cv .pale-blue {
-    background-color: #eff8ff
-}
+  .cv_modal .modal-body {
+    border: none;
+    background-color: white;
+    padding-bottom: 5px
+  }
 
-.details_cv .pale-orange {
-    background-color: #ffe5b9
-}
+  .cv_modal .logo {
+    width: 100px;
+    height: 100px;
+    background: url(https://res.cloudinary.com/dxfq3iotg/image/upload/v1576118709/83225325-beauty-spa-logo-design.jpg);
+    background-size: contain;
+    position: relative;
+    right: 14px
+  }
 
-.details_cv .pale-purple {
-    background-color: #e8e8e8
-}
+  .cv_modal .off {
+    margin-top: 25px;
+    width: 50px;
+    height: 50px;
+    background: url(https://res.cloudinary.com/dxfq3iotg/image/upload/v1576118728/30-off-white-background-special-offer-great-offer-sale-thirty-percent-off-promotional_59529-691.jpg);
+    background-size: contain
+  }
 
-.details_cv .pale-cyan {
-    background-color: #cffffe
-}
+  .cv_modal .heading {
+    justify-content: space-between
+  }
 
-.details_cv .pale-pink {
-    background-color: #ffe4e4
-}
+  .cv_modal .modal-footer {
+    border: none
+  }
 
-.details_cv .pale-pale {
-    background-color: #f4eeff
-}
+  .cv_modal .btn.focus,
+  .cv_modal .btn:focus {
+    outline: 0;
+    box-shadow: none !important
+  }
 
-.details_cv .pale-green {
-    background-color: #a0ffe6
-}
+  .cv_modal .close.focus,
+  .cv_modal .close:focus {
+    outline: 0;
+    box-shadow: none !important
+  }
 
-.details_cv .pale-pista {
-    background-color: #dbf6e9
-}
+  .cv_modal .hurry {
+    margin-top: 30px
+  }
+
+  .cv_modal .booking {
+    background-color: white;
+    border: 2px solid lightgray;
+    border-radius: 0px;
+    max-height: 100px;
+    height: 100px;
+    overflow-x: scroll;
+  }
+
+  .cv_modal .booking:hover {
+    background-color: #ECEFF1;
+    border: 2px solid black
+  }
+
+  @media (min-width:599px) {
+    .cv_modal .modal-dialog {
+      max-width: 47rem
+    }
+
+    .cv_modal .details {
+      padding: 0 114px
+    }
+
+    .cv_modal .off {
+      position: absolute;
+      bottom: 150px;
+      left: 25px
+    }
+  }
+
+  .cv_modal .container {
+    display: flex;
+    justify-content: center;
+    margin-top: 200px;
+    background: transparent
+  }
+
+  .cv_modal .trigger {
+    background-color: black;
+    color: red
+  }
+
+  .cv_modal .modal,
+  .cv_modal .fade,
+  .cv_modal .show {
+    background-color: lightgray;
+    padding-left: 15px;
+    padding-right: 15px
+  }
+
+  .cv_modal .modal-content {
+    background: transparent;
+    border: none;
+    padding: 0 19px
+  }
+
+  .cv_modal .close {
+    position: relative;
+    top: 48px;
+    left: 13px;
+    z-index: 1;
+    font-size: 30px;
+    font-weight: 100;
+    line-height: 1;
+    color: gray
+  }
+
+  .cv_modal .modal-header {
+    border: none
+  }
+
+  .cv_modal .modal-body {
+    border: none;
+    background-color: white;
+    padding-bottom: 5px
+  }
+
+  .cv_modal .logo {
+    width: 100px;
+    height: 100px;
+    background: url(https://res.cloudinary.com/dxfq3iotg/image/upload/v1576118709/83225325-beauty-spa-logo-design.jpg);
+    background-size: contain;
+    position: relative;
+    right: 14px
+  }
+
+  .cv_modal .off {
+    margin-top: 25px;
+    width: 50px;
+    height: 50px;
+    background: url(https://res.cloudinary.com/dxfq3iotg/image/upload/v1576118728/30-off-white-background-special-offer-great-offer-sale-thirty-percent-off-promotional_59529-691.jpg);
+    background-size: contain
+  }
+
+  .cv_modal .heading {
+    justify-content: space-between
+  }
+
+  .cv_modal .modal-footer {
+    border: none
+  }
+
+  .cv_modal .btn.focus,
+  .cv_modal .btn:focus {
+    outline: 0;
+    box-shadow: none !important
+  }
+
+  .cv_modal .close.focus,
+  .cv_modal .close:focus {
+    outline: 0;
+    box-shadow: none !important
+  }
+
+  .cv_modal .hurry {
+    margin-top: 30px
+  }
+
+  .cv_modal .booking {
+    background-color: white;
+    border: 2px solid lightgray;
+    width: 150px;
+    border-radius: 0px
+  }
+
+  .cv_modal .booking:hover {
+    background-color: #ECEFF1;
+    border: 2px solid black
+  }
+
+  @media (min-width:599px) {
+    .cv_modal .modal-dialog {
+      max-width: 47rem
+    }
+
+    .cv_modal .details {
+      padding: 0 114px
+    }
+
+    .cv_modal .off {
+      position: absolute;
+      bottom: 150px;
+      left: 25px
+    }
+  }
 </style>
 
-<div class="container bg-light rounded details_cv">
-  <div class="h4 font-weight-bold text-center py-3">Explore more</div>
-  <div class="row">
-      <div class="col-lg-4 col-md-6 my-lg-0 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 text-center d-flex align-items-center justify-content-center blue"> <img src="https://freepngimg.com/thumb/microphone/11-microphone-png-image-thumb.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Public Speech</b> <a href="#">
-                          <p class="text-muted">23 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-0 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-orange"> <img src="https://freepngimg.com/thumb/email_marketing/5-2-email-png-thumb.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Write an email</b> <a href="#">
-                          <p class="text-muted">5 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-0 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-purple"> <img src="https://freepngimg.com/thumb/technology/40061-1-machining-robot-download-free-image-thumb.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Technology</b> <a href="#">
-                          <p class="text-muted">32 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-3 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-cyan"> <img src="https://freepngimg.com/thumb/brain/80003-learning-human-albert-play-scientist-behavior-einstein-thumb.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Professions</b> <a href="#">
-                          <p class="text-muted">5 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-3 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-pink"> <img src="https://freepngimg.com/thumb/google/66809-google-docs-drive-plus-android-document-thumb.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Documentation</b> <a href="#">
-                          <p class="text-muted">6 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-3 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-orange"> <img src="https://www.freepnglogos.com/uploads/plane-png/plane-png-fort-wayne-international-airport-2.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Business Trip</b> <a href="#">
-                          <p class="text-muted">28 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-0 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-orange"> <img src="https://www.freepnglogos.com/uploads/whatsapp-circle-message-messaging-messenger-round-icon--24.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>On the Phone</b> <a href="#">
-                          <p class="text-muted">5 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-0 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-green"> <img src="https://freepngimg.com/thumb/technology/63219-bin-recycling-computer-recycle-electronics-waste-electronic-thumb.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Electronics</b> <a href="#">
-                          <p class="text-muted">5 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-4 col-md-6 my-lg-0 my-3">
-          <div class="box bg-white">
-              <div class="d-flex align-items-center">
-                  <div class="rounded-circle mx-3 d-flex align-items-center justify-content-center pale-pista"> <img src="https://freepngimg.com/thumb/happy_person/4-2-happy-person-transparent-thumb.png" alt=""> </div>
-                  <div class="d-flex flex-column"> <b>Job Interview</b> <a href="#">
-                          <p class="text-muted">5 classes</p>
-                      </a> </div>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
 
 <form action="" method="post" enctype="multipart/form-data">
   {{upload_form.hidden_tag()}}
@@ -649,11 +707,9 @@ b {
       <div class="green-label font-weight-bold p-0 px-1 mx-sm-1 mx-0">Selected Filtre <span
           class=" px-1 close">&times;</span> </div>
     </div>
-    <div class="filters"> <button class="btn btn-success" type="button" data-toggle="collapse"
-      data-target="#mobile-filter" aria-expanded="true" aria-controls="mobile-filter">Filter<span
-        class="px-1 fas fa-filter"></span></button> </div>
+
     <div id="mobile-filter">
-      
+
       <div class="py-3">
         <h5 class="font-weight-bold">Niveau Éducatif</h5>
         <ul class="list-group">
@@ -711,12 +767,12 @@ b {
       </div>
     </div>
     <div class="content py-md-0 py-3">
-      <section id="sidebar2" style="background-color: #f8f9fa; " class="border">
-        <form action="" class="pl-3">
+      <section id="sidebar2" class="py-2"style="background-color: #f8f9fa; " class="border">
+        <form action="{{url_for('resume_app.resumes')}}" class="pl-3" method="get">
           {{filter_form.hidden_tag()}}
-          <div class="py-3">
+          <div class="py-2">
             <h5 class="font-weight-bold">Langues ({{cvs_info.languages|length}})</h5>
-            <div class="form-check px-3">
+            <div class="form-check px-3 py-0 my-0">
               {% for lang in filter_form.langue %}
               {{lang(class="form-check-input ")}}
 
@@ -725,9 +781,9 @@ b {
             </div>
 
           </div>
-          <div class="py-3">
+          <div class="py-2">
             <h5 class="font-weight-bold">Niveaux Éducatif ({{cvs_info.educations|length}})</h5>
-            <div class="form-check px-3">
+            <div class="form-check px-3 py-0 my-0">
               {% for educ in filter_form.education %}
               {{educ(class="form-check-input ")}}
 
@@ -737,10 +793,10 @@ b {
 
           </div>
 
-          <div class="py-3">
+          <div class="py-2">
             <h5 class="font-weight-bold">Pays ({{cvs_info.countries|length}})</h5>
-            <div class="px-3" style="max-height:250px;overflow-y: scroll;">
-              <div class="form-check pl-1 ">
+            <div class="px-3 " style="max-height:250px;overflow-y: scroll;">
+              <div class="form-check pl-1 py-0 my-0">
 
                 {% for count in filter_form.country %}
                 {{count(class="form-check-input ")}}
@@ -750,10 +806,10 @@ b {
               </div>
             </div>
           </div>
-          <div class="py-3">
+          <div class="py-2">
             <h5 class="font-weight-bold">Compétences ({{cvs_info.skills|length}})</h5>
-            <div class="px-3" style="max-height:250px;height:250px;overflow-y: scroll;">
-              <div class="form-check pl-1 ">
+            <div class="px-3 " style="max-height:250px;height:250px;overflow-y: scroll;">
+              <div class="form-check pl-1 py-0 my-0 ">
                 {% for skill in filter_form.skill %}
                 {{skill(class="form-check-input ")}}
 
@@ -762,7 +818,15 @@ b {
               </div>
             </div>
           </div>
+          <div class="filters pb-2 float-right text-center pr-3 w-100"> 
+    
+            <button class="btn btn-success w-100" type="submit">
+              Filtrer
+            </button>
+
+          </div>
         </form>
+
       </section>
       <section id="products">
         <div class="container py-0">
@@ -770,15 +834,21 @@ b {
             {% for resume in resumes %}
 
             <div class="col-lg-3 col-md-3 col-sm-10 offset-md-0 offset-sm-1 pt-lg-4 pt-4">
-              <!--div class="bg-white ">
-                <div class="text-center">
-                  <label class="badge p-1 text-white " style="background-color: #e75d74;">
-                    <button type='button' data-toggle="modal" data-target="#delete_confirm{{resume.id_resume}}"
-                      style="padding:1px;background-color: transparent;border: 0; color: inherit;"><i
-                        class="fas fa-trash-alt" aria-hidden="true"></i></a></button>
+              <div class="bg-white d-flex ">
+                <div>
+                  <button type='button' data-toggle="modal" data-target="#cv_details{{resume.id_resume}}"
+                    style="padding:1px;background-color: transparent;border: 0; color: inherit;">
+                    <i class="fa fa-search-plus text-success" aria-hidden="true"></i>
+                    </a></button>
                 </div>
-              </div-->
-              
+                <div class="float-left">
+                  <button type='button' data-toggle="modal" data-target="#delete_confirm{{resume.id_resume}}"
+                    style="padding:1px;background-color: transparent;border: 0; color: inherit;">
+                    <i class="fas fa-trash-alt" aria-hidden="true"></i></a></button>
+                </div>
+
+              </div>
+
 
               <form action="{{ url_for('resume_app.delete',id=resume.id_resume) }}" method=post class="modal fade"
                 id="delete_confirm{{resume.id_resume}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -799,15 +869,110 @@ b {
                   </div>
                 </div>
               </form>
-              
-              <button data-target="#openCV{{resume.id_resume}}" data-toggle="modal"
+              <div class="modal fade cv_modal" id="cv_details{{resume.id_resume}}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header "> <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>
+                    <div class="modal-body p-0 row">
+                      <div class="col-12 col-lg-4 ad p-0 w-100"> <img
+                          src="{{url_for('static',filename='resumes/img/'+resume.path_image)}}" width="100%"
+                          height="100%"> </div>
+                      <div class="details col-12 col-lg-8 p-3 pl-5">
+                        <h2>Détails du Circualem Vitae</h2>
+
+                        <div class="row p-2">
+
+                          <div class="btn booking col-6 ">
+                            <div class="m-0 p-1 col-details">
+                              <label><strong><i class="fa fa-pencil" aria-hidden="true"></i>
+                                  Langue<br /></strong>
+                                <small class="text-muted">
+
+                                  {%if resume.language=="fr" %}Français
+                                  {%elif resume.language=="en" %} Anglais
+                                  {%else%}resume.language
+                                  {%endif%}
+                                </small></label>
+                            </div>
+                          </div>
+                          <div class="btn booking col-6 ">
+                            <div class="m-0 p-1 col-details">
+                              <label><strong><i class="fa fa-globe" aria-hidden="true"></i>
+                                  Pays<br /></strong>
+                                <small class="text-muted text-capitalize">
+                                  {{resume.country}}
+                                </small></label>
+                            </div>
+                          </div>
+                          <div class="btn booking col-6  ">
+                            <div class="m-0 p-1 col-details">
+                              <label><strong><i class="fa fa-mobile" aria-hidden="true"></i>
+                                  Numero<br /></strong>
+                                <small class="text-muted">
+                                  {% for phone in resume.phones %}
+                                  {%if phone.number.split("-")|length!=2%}
+                                  {{phone.number}}
+                                  {%endif%}
+                                  {%endfor%}
+                                </small></label>
+                            </div>
+                          </div>
+
+                          <div class="btn booking col-6  ">
+                            <div class="m-0 p-1 col-details">
+                              <label><strong><i class="fa fa-mobile" aria-hidden="true"></i>
+                                  Email<br /></strong>
+                                <small class="text-muted">
+                                  {% for email in resume.emails %}
+                                  {{email.email}}<br>
+                                  {%endfor%}
+                                </small></label>
+                            </div>
+                          </div>
+
+                          <div class="btn booking col-6  ">
+                            <div class="m-0 p-1 col-details">
+                              <label><strong><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                  Education<br /></strong>
+                                <small class="text-muted">
+                                  {% for educ in resume.educations %}
+                                  {{educ.degree}}<br>
+                                  {%endfor%}
+                                </small></label>
+                            </div>
+                          </div>
+
+                          <div class="btn booking col-6  ">
+                            <div class="m-0 p-1 col-details">
+                              <label><strong><i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                  Skills<br /></strong>
+                                <small class="text-muted">
+                                  {% for skill in resume.skills %}
+                                  {{skill.skill_name}}, <br>
+                                  {%endfor%}
+                                </small></label>
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="" data-target="#openCV{{resume.id_resume}}" data-toggle="modal"
                 style="border: none;background-color:transparent;padding: 0;">
-               
+
                 <div class="card">
-                  <div class="bg-white"></div>
-                  <img class="card-img-top"
+                  <img class="card-img-top  h-25" 
                     src="{{url_for('static',filename='resumes/img/'+resume.path_image)}}">
-                  <div class="card-body">
+
+                  <div class="card-body mt-0 pt-1 pb-2 ">
+
                     <!--h6 class="font-weight-bold pt-1">Product title</h6-->
                     <div class="text-muted description">
                       <strong>Langue: </strong>
@@ -820,7 +985,7 @@ b {
                     <div class="d-flex align-items-center justify-content-between pt-">
                       <div class="d-flex flex-column text-center">
                         <div class="h6 font-weight-bold">
-                          <i class="fa fa-file-pdf-o text-danger my-1 mr-1" aria-hidden="true"></i>
+                          <i class="fa fa-file-pdf-o text-danger my-1 mr-1 pb-1" aria-hidden="true"></i>
                           Voir le CV
                         </div>
 
@@ -839,7 +1004,6 @@ b {
 
                       <div class="modal-content" style="background-color: transparent;border:none;">
                         <div class="modal-body">
-
                           <iframe src="{{url_for('static',filename='resumes/pdf_docx/'+resume.path_file)}}" width="100%"
                             height="600px">
                           </iframe>

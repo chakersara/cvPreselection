@@ -23,10 +23,12 @@ def resumes():
     filter_form = FilterCvForm(skills_choices=cvs_info.get("skills"),
                                education_choices=cvs_info.get("educations"),
                                country_choices=cvs_info.get("countries"),
-                               langue_choices=cvs_info.get("languages"))
+                               langue_choices=cvs_info.get("languages"),args=request.args)
     if upload_form.validate_on_submit():
         for file in upload_form.files.data:
             resume_add(file)
+    if filter_form.validate_on_submit():
+        return redirect(url_for("index"))
     resumes = Resume.query.order_by(desc(Resume.id_resume)).all()
     db.session.commit()
     return render_template("pages/resumes.html", upload_form=upload_form,

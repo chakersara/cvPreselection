@@ -2,6 +2,7 @@ import os
 from random import randint
 from pdf2image import convert_from_bytes
 from PIL import Image
+from sqlalchemy import func
 from werkzeug.utils import secure_filename
 from .extract import ResExtract
 from models.resumeEntity import Skill, Education, Email, Phone, Resume, db
@@ -66,17 +67,22 @@ def get_all_education_cvs():
 
 
 def get_all_countries_cvs():
-    return list(map(lambda count: (count[0], count[0].capitalize()),
+    return sorted(list(map(lambda count: (count[0], count[0].capitalize()),
                     Resume.query.with_entities(Resume.country.distinct()).
                     filter(Resume.country != None)
-                    .all()))
+                    .all())))
 
+def get_countries_homepage():
+    resumes=Resume.query.with_entities(Resume.country, func.count(Resume.country)).group_by(Resume.country).all()
+    resumes={res[0].capitalize():res[1] for res in resumes if res[0]!=None}
+    resumes["Pas définie"]=len(Resume.query.all())-sum(resumes.values())
+    return resumes
 
 def get_all_skills_cvs():
     skills = []
     for resume in Resume.query.all():
         skills.extend(resume.skills)
-    return [(skill.skill_name, skill.skill_name) for skill in set(skills)]
+    return sorted([(skill.skill_name, skill.skill_name) for skill in set(skills)])
 
 
 def get_languages():
@@ -84,3 +90,14 @@ def get_languages():
                     else (("en", "Anglais") if lang[0] == "en" else (lang[0], lang[0])),
                     Resume.query.with_entities(Resume.language.distinct()).
                     filter(Resume.language != None).all()))
+
+def get_languages_homepage():
+    resumes=Resume.query.with_entities(Resume.language, func.count(Resume.language)).\
+        group_by(Resume.language).all()
+    lan={"fr":"Français","en":"Anglais"}
+    resumes={lan.get(res[0],res[0]):res[1] for res in resumes if res[0]!=None}
+    
+    none_val=len(Resume.query.all())-sum(resumes.values()) 
+    if none_val:
+        resumes["Pas définie"]=none_val
+    return resumes

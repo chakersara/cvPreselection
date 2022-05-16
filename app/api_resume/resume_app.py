@@ -5,10 +5,11 @@ from .forms.filter_cv_form import FilterCvForm
 from .services.resume_service import (resume_add, resume_del, get_all_countries_cvs,
                                       get_all_education_cvs, get_all_skills_cvs, get_languages)
 from config import Config
-from models.resumeEntity import Resume, db, Education
+from models.resumeEntity import Resume, db, Education,Skill
 from time import time
 from sqlalchemy import desc
 from flask import request
+from sqlalchemy import and_, or_
 
 
 resume_app = Blueprint("resume_app", __name__)
@@ -23,13 +24,30 @@ def resumes():
     filter_form = FilterCvForm(skills_choices=cvs_info.get("skills"),
                                education_choices=cvs_info.get("educations"),
                                country_choices=cvs_info.get("countries"),
-                               langue_choices=cvs_info.get("languages"),args=request.args)
+                               langue_choices=cvs_info.get("languages"), args=request.args)
     if upload_form.validate_on_submit():
         for file in upload_form.files.data:
             resume_add(file)
-    if filter_form.validate_on_submit():
-        return redirect(url_for("index"))
-    resumes = Resume.query.order_by(desc(Resume.id_resume)).all()
+    if filter_form.validate_on_submit() :
+        try:
+            filtred_res = [Resume.query.filter(Resume.educations.any(
+                Education.degree.in_(filter_form.education.data))).all(),
+                Resume.query.filter(Resume.language.in_(
+                    filter_form.langue.data)).all(),
+                Resume.query.filter(Resume.country.in_(
+                    filter_form.country.data)).all(),
+                Resume.query.filter(Resume.skills.any(
+                    Skill.skill_name.in_(filter_form.skill.data))).all()
+            ]
+
+            resumes = set.intersection(
+                *map(set, [lst for lst in filtred_res if lst]))
+        except:
+            resumes = Resume.query.order_by(desc(Resume.id_resume)).all()
+
+    else:
+        resumes = Resume.query.order_by(desc(Resume.id_resume)).all()
+
     db.session.commit()
     return render_template("pages/resumes.html", upload_form=upload_form,
                            resumes=resumes, picture_form=edit_picture(), filter_form=filter_form,
@@ -37,8 +55,8 @@ def resumes():
                            )
 
 
-@resume_app.route("/delete/<id>", methods=["post", "get"])
-@login_required
+@ resume_app.route("/delete/<id>", methods=["post", "get"])
+@ login_required
 def delete(id):
     resume_del(id)
     return redirect(redirect_last_url(request))

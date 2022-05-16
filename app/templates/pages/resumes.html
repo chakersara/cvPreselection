@@ -678,18 +678,14 @@
       left: 25px
     }
   }
+
+  #add_me_res {
+    display: none;
+  }
 </style>
 
 
-<form action="" method="post" enctype="multipart/form-data">
-  {{upload_form.hidden_tag()}}
-  {% for error in upload_form.files.errors %}
-  {{error}}
-  {% endfor %}
-  {{upload_form.files}}
-  {{upload_form.submit}}
 
-</form>
 <div>
   <div class="wrapper">
     <div class="d-md-flex align-items-md-center">
@@ -699,13 +695,41 @@
         <span class="green-label px-md-2 px-1">{{resumes|length}}</span> <span class="text-muted">CVS</span>
       </div>
     </div>
+    <div class="float-right">
+      <button onclick="show_add()"
+        class="p-2 btn green-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2 ">Ajouter cv(s)<span
+          class="ml-2 fas fa-plus"></span>
+    </div>
+    </button>
+    <script defer>
+      function show_add() {
+        let form = document.querySelector("#add_me_res")
+        console.log(form.style.display)
+        if (!form.style.display)
+          form.style.display = "Block"
+        else
+          form.style.display = ""
+      }
+    </script>
+    <br>
+    <form action="" method="post" enctype="multipart/form-data" 
+    id="add_me_res" class="float-left pb-2">
+      {{upload_form.hidden_tag()}}
+      {% for error in upload_form.files.errors %}
+      {{error}}
+      {% endfor %}
+      {{upload_form.files()}}
+      {{upload_form.submit}}
 
-    <div class="d-sm-flex align-items-sm-center pt-2 clear">
-      <div class="text-muted filter-label">Applied Filters:</div>
+    </form>
+    <div class="d-sm-flex align-items-sm-center pt-2 clear float-end ">
+      <!--div class="text-muted filter-label">Applied Filters:</div>
       <div class="green-label font-weight-bold p-0 px-1 mx-sm-1 mx-0 my-sm-0 my-2">Selected Filtre <span
           class=" px-1 close">&times;</span> </div>
       <div class="green-label font-weight-bold p-0 px-1 mx-sm-1 mx-0">Selected Filtre <span
-          class=" px-1 close">&times;</span> </div>
+          class=" px-1 close">&times;</span> </div-->
+
+
     </div>
 
     <div id="mobile-filter">
@@ -767,9 +791,10 @@
       </div>
     </div>
     <div class="content py-md-0 py-3">
-      <section id="sidebar2" class="py-2"style="background-color: #f8f9fa; " class="border">
-        <form action="{{url_for('resume_app.resumes')}}" class="pl-3" method="get">
+      <section id="sidebar2" class="py-2" style="background-color: #f8f9fa; " class="border">
+        <form action="{{url_for('resume_app.resumes')}}" class="pl-3" method="post">
           {{filter_form.hidden_tag()}}
+          {{ filter_form.csrf_token }}
           <div class="py-2">
             <h5 class="font-weight-bold">Langues ({{cvs_info.languages|length}})</h5>
             <div class="form-check px-3 py-0 my-0">
@@ -784,6 +809,7 @@
           <div class="py-2">
             <h5 class="font-weight-bold">Niveaux Éducatif ({{cvs_info.educations|length}})</h5>
             <div class="form-check px-3 py-0 my-0">
+              
               {% for educ in filter_form.education %}
               {{educ(class="form-check-input ")}}
 
@@ -818,8 +844,8 @@
               </div>
             </div>
           </div>
-          <div class="filters pb-2 float-right text-center pr-3 w-100"> 
-    
+          <div class="filters pb-2 float-right text-center pr-3 w-100">
+
             <button class="btn btn-success w-100" type="submit">
               Filtrer
             </button>
@@ -879,9 +905,9 @@
                       <div class="col-12 col-lg-4 ad p-0 w-100"> <img
                           src="{{url_for('static',filename='resumes/img/'+resume.path_image)}}" width="100%"
                           height="100%"> </div>
-                      <div class="details col-12 col-lg-8 p-3 pl-5">
+                      <div class="details col-12 col-lg-8 p-3 pl-5 float-left">
                         <h2>Détails du Circualem Vitae</h2>
-
+                    
                         <div class="row p-2">
 
                           <div class="btn booking col-6 ">
@@ -968,8 +994,7 @@
                 style="border: none;background-color:transparent;padding: 0;">
 
                 <div class="card">
-                  <img class="card-img-top  h-25" 
-                    src="{{url_for('static',filename='resumes/img/'+resume.path_image)}}">
+                  <img class="card-img-top  h-25" src="{{url_for('static',filename='resumes/img/'+resume.path_image)}}">
 
                   <div class="card-body mt-0 pt-1 pb-2 ">
 

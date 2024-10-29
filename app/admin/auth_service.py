@@ -7,7 +7,7 @@ from pathlib import Path
 
 def addAdmin(username,email,password,position,role="admin"):
     if session.get("logged") and session.get("role")=='super_admin':
-        adminEntity=Admin(username=username,email=email,password=generate_password_hash(password),role=role,position=position)
+        adminEntity=Admin(username=username,email=email,password=generate_password_hash(password, method='pbkdf2:sha256'),role=role,position=position)
         db.session.add(adminEntity)
         db.session.commit()
         return True

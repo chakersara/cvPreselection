@@ -18,42 +18,55 @@ resume_app = Blueprint("resume_app", __name__)
 @resume_app.route("/", methods=["post", "get"])
 @login_required
 def resumes():
-    cvs_info = {"skills": get_all_skills_cvs(), "educations": get_all_education_cvs(),
-                "countries": get_all_countries_cvs(), "languages": get_languages()}
+    cvs_info = {
+        "skills": get_all_skills_cvs(),
+        "educations": get_all_education_cvs(),
+        "countries": get_all_countries_cvs(),
+        "languages": get_languages()
+    }
     upload_form = UploadResume()
-    filter_form = FilterCvForm(skills_choices=cvs_info.get("skills"),
-                               education_choices=cvs_info.get("educations"),
-                               country_choices=cvs_info.get("countries"),
-                               langue_choices=cvs_info.get("languages"), args=request.args)
+    filter_form = FilterCvForm(
+        skills_choices=cvs_info.get("skills"),
+        education_choices=cvs_info.get("educations"),
+        country_choices=cvs_info.get("countries"),
+        langue_choices=cvs_info.get("languages"),
+        args=request.args
+    )
+    
     if upload_form.validate_on_submit():
         for file in upload_form.files.data:
-            resume_add(file)
-    if filter_form.validate_on_submit() :
+            success = resume_add(file)
+            if not success:
+                # Handle upload failure, e.g., flash a message
+                pass
+    
+    if filter_form.validate_on_submit():
         try:
-            filtred_res = [Resume.query.filter(Resume.educations.any(
-                Education.degree.in_(filter_form.education.data))).all(),
-                Resume.query.filter(Resume.language.in_(
-                    filter_form.langue.data)).all(),
-                Resume.query.filter(Resume.country.in_(
-                    filter_form.country.data)).all(),
-                Resume.query.filter(Resume.skills.any(
-                    Skill.skill_name.in_(filter_form.skill.data))).all()
-            ]
-
-            resumes = set.intersection(
-                *map(set, [lst for lst in filtred_res if lst]))
-        except:
+            filtred_res = Resume.query
+            if filter_form.education.data:
+                filtred_res = filtred_res.filter(Resume.educations.any(Education.degree.in_(filter_form.education.data)))
+            if filter_form.langue.data:
+                filtred_res = filtred_res.filter(Resume.language.in_(filter_form.langue.data))
+            if filter_form.country.data:
+                filtred_res = filtred_res.filter(Resume.country.in_(filter_form.country.data))
+            if filter_form.skill.data:
+                filtred_res = filtred_res.filter(Resume.skills.any(Skill.skill_name.in_(filter_form.skill.data)))
+            
+            resumes = filtred_res.order_by(desc(Resume.id_resume)).all()
+        except Exception as e:
+            print(f"Error during filtering: {e}")
             resumes = Resume.query.order_by(desc(Resume.id_resume)).all()
-
     else:
         resumes = Resume.query.order_by(desc(Resume.id_resume)).all()
-
-    db.session.commit()
-    return render_template("pages/resumes.html", upload_form=upload_form,
-                           resumes=resumes, picture_form=edit_picture(), filter_form=filter_form,
-                           cvs_info=cvs_info
-                           )
-
+    
+    return render_template(
+        "pages/resumes.html",
+        upload_form=upload_form,
+        resumes=resumes,
+        picture_form=edit_picture(),
+        filter_form=filter_form,
+        cvs_info=cvs_info
+    )
 
 @ resume_app.route("/delete/<id>", methods=["post", "get"])
 @ login_required

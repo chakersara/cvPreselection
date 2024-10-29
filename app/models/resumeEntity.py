@@ -56,9 +56,9 @@ class Education(db.Model):
 
 class Skill(db.Model):
     __table_args__ = {'extend_existing': True}
-    id_skill=db.Column(db.Integer,primary_key=True)
-    skill_name=db.Column(db.String(90),nullable=False,unique=True)
+    id_skill = db.Column(db.Integer, primary_key=True)
+    skill_name = db.Column(db.String(90), nullable=False, unique=True)
 
-    def __init__(self,name,id=None):
-        self.id_skill=id
-        self.skill_name=name
+    def __init__(self, name, id=None):
+        self.id_skill = id
+        self.skill_name = name

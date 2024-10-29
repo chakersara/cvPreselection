@@ -30,19 +30,18 @@ def resume_add(file):
     try:
         file_filename = secure_filename(file.filename)
         while os.path.isfile(f'{Config.UPLOAD_RESUMES}{file_filename}'):
-            file_filename = str(randint(0, 100))+file_filename
+            file_filename = f"{randint(0, 100)}_{file_filename}"
         path = f'{Config.UPLOAD_RESUMES}{file_filename}'
         file.save(os.path.join(path))
-        image_name = file_filename.split(".")[0]
+        image_name = os.path.splitext(file_filename)[0]
         convert2img(file_filename, image_name)
-        resume = createResume(path, file_filename, image_name+".jpeg")
-        save_resume(path=path,path_image=image_name+".jpeg",path_file=file_filename)
-        return resume
+        save_resume(path_file=path, path_image=image_name + ".jpeg", path_file_name=file_filename)
+        return True 
     except Exception as ex:
-        print(ex)
+        print("error in adding resume:", ex)
+        return False
 
-
-def createResume(path, file, imagefile):
+def create_resume(path, file, imagefile):
     extract = ResExtract(path)
     resume = Resume(
         path_file=file,
@@ -50,15 +49,34 @@ def createResume(path, file, imagefile):
         language=extract.language,
         country=extract.getCountry()
     )
-    resume.educations.extend(extract.getEducation())
-    resume.skills.extend(extract.getSkills())
-    emails = [Email(email=email, resume=resume) for email in extract.getEmail()]
-    phone = [Phone(number=num, resume=resume) for num in extract.getPhoneNumber()]
     db.session.add(resume)
-    db.session.add_all(phone)
+    resume.educations.extend(extract.getEducation())
+
+    # Add skills to resume by querying them from the database
+    skill_names = extract.getSkills()
+    add_skills_to_resume(resume, skill_names)
+
+    # Add emails and phones
+    emails = [Email(email=email, resume=resume) for email in extract.getEmail()]
+    phones = [Phone(number=num, resume=resume) for num in extract.getPhoneNumber()]
+    db.session.add_all(phones)
     db.session.add_all(emails)
+
+    # Commit all changes
     db.session.commit()
     return resume
+
+
+def add_skills_to_resume(resume, skill_names):
+    for skill_name in skill_names:
+        # Query for the skill in the database
+        skill = Skill.query.filter_by(skill_name=skill_name).first()
+        if skill is not None:
+            # Add the skill to the resume if it is not already linked
+            if skill not in resume.skills:
+                resume.skills.append(skill)
+        else:
+            print(f"Skill '{skill_name}' not found in the database.")
 
 
 def get_all_education_cvs():
@@ -74,11 +92,13 @@ def get_all_countries_cvs():
                     filter(Resume.country != None)
                     .all())))
 
+
 def get_countries_homepage():
-    resumes=Resume.query.with_entities(Resume.country, func.count(Resume.country)).group_by(Resume.country).all()
-    resumes={res[0].capitalize():res[1] for res in resumes if res[0]!=None}
-    resumes["Pas définie"]=len(Resume.query.all())-sum(resumes.values())
+    resumes = Resume.query.with_entities(Resume.country, func.count(Resume.country)).group_by(Resume.country).all()
+    resumes = {res[0].capitalize(): res[1] for res in resumes if res[0] is not None}
+    resumes["Pas définie"] = len(Resume.query.all()) - sum(resumes.values())
     return resumes
+
 
 def get_all_skills_cvs():
     skills = []
@@ -93,13 +113,13 @@ def get_languages():
                     Resume.query.with_entities(Resume.language.distinct()).
                     filter(Resume.language != None).all()))
 
+
 def get_languages_homepage():
-    resumes=Resume.query.with_entities(Resume.language, func.count(Resume.language)).\
-        group_by(Resume.language).all()
-    lan={"fr":"Français","en":"Anglais"}
-    resumes={lan.get(res[0],res[0]):res[1] for res in resumes if res[0]!=None}
-    
-    none_val=len(Resume.query.all())-sum(resumes.values()) 
+    resumes = Resume.query.with_entities(Resume.language, func.count(Resume.language)).group_by(Resume.language).all()
+    lan = {"fr": "Français", "en": "Anglais"}
+    resumes = {lan.get(res[0], res[0]): res[1] for res in resumes if res[0] is not None}
+
+    none_val = len(Resume.query.all()) - sum(resumes.values())
     if none_val:
-        resumes["Pas définie"]=none_val
+        resumes["Pas définie"] = none_val
     return resumes

@@ -4,7 +4,6 @@ from pdfminer.high_level import extract_text
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import nltk
-from pprint import pprint
 import re
 from langdetect import detect
 from nltk.stem import PorterStemmer
@@ -12,8 +11,8 @@ from nltk.stem.snowball import FrenchStemmer
 import goslate
 import string
 from multiprocessing import Process
-from time import time
-import asyncio
+from sqlalchemy import func
+
 from models.resumeEntity import Skill,Education,Email,Phone,Resume,db
 
 class ResExtract:
@@ -77,11 +76,17 @@ class ResExtract:
         gs = goslate.Goslate()
         frenchWord = gs.translate(w,'fr')
         return frenchWord
-
+    
     def getSkills(self):
-        oneTofour_token = [w.lower() for w in self.filtered_token.union(self.composed_filtered_token)]
-        return {Skill(id=skill.id_skill,name=skill.skill_name.lower()) for skill in Skill.query.all() if skill.skill_name.lower() in oneTofour_token}
-
+        try:
+            oneTofour_token = {w.lower() for w in self.filtered_token.union(self.composed_filtered_token)}
+            matched_skills = Skill.query.filter(func.lower(Skill.skill_name).in_(oneTofour_token)).all()
+            print(f"Matched Skills: {[skill.skill_name for skill in matched_skills]}")
+            return matched_skills
+        except Exception as e:
+            print(f"Error in getSkills: {e}")
+            return []
+    
     def getCountry(self):
         stemmed_countries=self.__stemmedList(self.countries)
         stemmed_resume=self.__stemmedList(self.all_filtered_tokens)
@@ -97,9 +102,12 @@ class ResExtract:
     def getPhoneNumber(self):
         return list(re.findall(r"[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]", self.text))
     
-    def __addEducation(self,educList,title,regex,resume):
-        if re.compile(regex).findall(resume):
-            educList.append(Education.query.filter(Education.degree.like(title)).first())
+    def __addEducation(self, educList, title, regex, resume):
+        if re.compile(regex).search(resume):
+            education = Education.query.filter(Education.degree.ilike(title)).first()
+            if education:
+                educList.append(education)
+
 
     def getEducation(self):
         res=self.text.lower()

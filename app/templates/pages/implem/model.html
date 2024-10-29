@@ -8,7 +8,7 @@
 
 <body>
 
-  {% set image="images/users/"+session['image']%}
+  {% set image="images/users/" + (session['image'] if session['image'] else 'users/default.jpg') %}
   {% set username=session["username"]%}
   {% set email=session["email"] %}
   {% if session['role'] =="admin"%}

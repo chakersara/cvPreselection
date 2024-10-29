@@ -282,7 +282,6 @@ resume.csv
 .vscode
 jdid.html
 
-
-static/resumes/img
+resumes/img
 resumes/pdf_dox
 resumes/*.pdf

@@ -11,6 +11,6 @@ def client():
 def test_query_find_skills_by_name():
     """Test finding skills by name match."""
     with app.app_context():
-        results = query_find_skills("Java").all()
-        assert len(results) > 0, "Expected at least one skill containing 'Java'"
-        assert any("Java" in skill.skill_name for skill in results), "Expected 'Java' in skill names"
+        results = query_find_skills("Java").all()  
+        assert len(results) > 0, "Expected at least one skill containing 'java'"
+        assert any("java" in skill.skill_name for skill in results), "Expected 'java' in skill names"

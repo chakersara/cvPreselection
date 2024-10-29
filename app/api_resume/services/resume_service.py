@@ -35,8 +35,7 @@ def resume_add(file):
         file.save(os.path.join(path))
         image_name = os.path.splitext(file_filename)[0]
         convert2img(file_filename, image_name)
-        save_resume(path_file=path, path_image=image_name + ".jpeg", path_file_name=file_filename)
-        return True 
+        return save_resume(path_file=path, path_image=image_name + ".jpeg", path_file_name=file_filename)
     except Exception as ex:
         print("error in adding resume:", ex)
         return False

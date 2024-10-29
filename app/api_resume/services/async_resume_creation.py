@@ -48,8 +48,8 @@ def save_resume(path_file, path_image, path_file_name):
         
         # Commit
         db.session.commit()
-        
         print(f"Resume {res.id_resume} saved successfully.")
+        return res
     except Exception as ex:
         db.session.rollback()
         print(f"Error in save_resume: {ex}")

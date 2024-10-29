@@ -53,148 +53,29 @@ def test_delete_skill(client):
     else:
         pytest.fail(f"Skill '{skill_name}' not found, cannot delete.")
 
+def test_resume_add_and_delete(client):
+    """Integration test for adding and deleting a resume in the same function"""
 
-def test_resume_add(client):
-    """Integration test for adding a resume"""
-    resume_file = FileStorage(
-        stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-        filename='test_resume.pdf',
-        content_type='application/pdf'
-    )
-    resume = resume_add(resume_file)
-   
-# def test_resume_delete(client):
-#     """Integration test for deleting a resume"""
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         resume = Resume.query.first()
-#         resume_del(resume.id_resume)
-#         assert Resume.query.get(resume.id_resume) is None
-#     finally:
-#         if resume:
-#             db.session.rollback()
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         resume = Resume.query.first()
-#         resume_del(resume.id_resume)
-#         assert Resume.query.get(resume.id_resume) is None
-#     except (IntegrityError, PendingRollbackError) as e:
-#         pytest.fail(f"Database error occurred: {e}")
+    resume_file_path = os.path.join(os.path.dirname(__file__), '../test_resume.pdf')
 
-# def test_get_all_education_cvs(client):
-#     """Integration test for retrieving all education entries from resumes"""
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         education_entries = get_all_education_cvs()
-#         assert len(education_entries) > 0
-#     finally:
-#         resume = Resume.query.first()
-#         if resume:
-#             resume_del(resume.id_resume)
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         education_entries = get_all_education_cvs()
-#         assert len(education_entries) > 0
-#     except IntegrityError as e:
-#         pytest.fail(f"IntegrityError occurred: {e}")
+    with open(resume_file_path, 'rb') as file:
+        resume_file = FileStorage(
+            stream=file,
+            filename='test_resume.pdf',
+            content_type='application/pdf'
+        )
 
-# def test_get_all_countries_cvs(client):
-#     """Integration test for retrieving all countries from resumes"""
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         countries = get_all_countries_cvs()
-#         assert len(countries) > 0
-#     finally:
-#         resume = Resume.query.first()
-#         if resume:
-#             resume_del(resume.id_resume)
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         countries = get_all_countries_cvs()
-#         assert len(countries) > 0
-#     except IntegrityError as e:
-#         pytest.fail(f"IntegrityError occurred: {e}")
+        try:
+            resume = resume_add(resume_file)
 
-# def test_get_all_skills_cvs(client):
-#     """Integration test for retrieving all skills from resumes"""
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         skills = get_all_skills_cvs()
-#         assert len(skills) > 0
-#     finally:
-#         resume = Resume.query.first()
-#         if resume:
-#             resume_del(resume.id_resume)
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         skills = get_all_skills_cvs()
-#         assert len(skills) > 0
-#     except IntegrityError as e:
-#         pytest.fail(f"IntegrityError occurred: {e}")
+            assert resume is not None, "Expected resume to be added to the database"
+            resume_id = resume.id_resume
 
-# def test_get_languages_homepage(client):
-#     """Integration test for retrieving language statistics for homepage"""
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         languages = get_languages_homepage()
-#         assert len(languages) > 0
-#     finally:
-#         resume = Resume.query.first()
-#         if resume:
-#             resume_del(resume.id_resume)
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         languages = get_languages_homepage()
-#         assert len(languages) > 0
-#     except IntegrityError as e:
-#         pytest.fail(f"IntegrityError occurred: {e}")
+            resume_del(resume_id)
+
+            # Check if the resume has been deleted
+            assert Resume.query.get(resume_id) is None, f"Expected the resume with ID {resume_id} to be deleted from the database"
+
+        except (IntegrityError, PendingRollbackError) as e:
+            pytest.fail(f"Database error occurred: {e}")
+

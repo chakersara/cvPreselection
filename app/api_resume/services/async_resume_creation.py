@@ -43,6 +43,7 @@ async def save_resume(path_file,path_image,path):
     db.session.add_all(phones)
     db.session.add_all(emails)
     db.session.commit()
+    print(res,"saved")
 
 
 

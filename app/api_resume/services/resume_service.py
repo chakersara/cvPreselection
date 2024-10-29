@@ -36,9 +36,9 @@ def resume_add(file):
         image_name = file_filename.split(".")[0]
         convert2img(file_filename, image_name)
         createResume(path, file_filename, image_name+".jpeg")
+        save_resume(path=path,path_image=image_name+".jpeg",path_file=file_filename)
     except Exception as ex:
         print(ex)
-    # await save_resume(path=path,path_image=image_name+".jpeg",path_file=file_filename)
 
 
 def createResume(path, file, imagefile):

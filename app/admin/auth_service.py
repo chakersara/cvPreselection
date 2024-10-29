@@ -83,7 +83,6 @@ def check_admin(email,password):
     try:
         get_password=return_admin(email=email).password
         if check_password_hash(get_password,password):
-            
             return True
         return False
     except:

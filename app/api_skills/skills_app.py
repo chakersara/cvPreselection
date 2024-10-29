@@ -20,5 +20,4 @@ def delete(id):
 @skills_app.route("add/<skill_name>")
 @login_required
 def add(skill_name):
-    ent=add_skill(skill_name)
-    return "ok"
+    add_skill(skill_name)

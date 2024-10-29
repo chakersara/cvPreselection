@@ -21,7 +21,7 @@ class Resume(db.Model):
     name=db.Column(db.Integer,nullable=True)
     emails=db.relationship("Email",backref="resume",cascade="delete, merge, save-update")
     phones=db.relationship("Phone",backref="resume",cascade="delete, merge, save-update")
-    educations=db.relationship("Education",secondary="resume_education",backref="resume")
+    educations=db.relationship("Education",secondary="resume_education",backref="resume",lazy=True)
     skills=db.relationship('Skill',secondary="resume_skill",backref="resume")
 
     def __init__(self,path_file=None,path_image=None,language=None,country=None,name=None):

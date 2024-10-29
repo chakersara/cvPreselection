@@ -79,8 +79,8 @@ class ResExtract:
         return frenchWord
 
     def getSkills(self):
-        oneTofour_token=[w.lower() for w in self.filtered_token.union(self.composed_filtered_token)]
-        return {skill for skill in Skill.query.all() if skill.skill_name.lower() in oneTofour_token}
+        oneTofour_token = [w.lower() for w in self.filtered_token.union(self.composed_filtered_token)]
+        return {Skill(id=skill.id_skill,name=skill.skill_name.lower()) for skill in Skill.query.all() if skill.skill_name.lower() in oneTofour_token}
 
     def getCountry(self):
         stemmed_countries=self.__stemmedList(self.countries)
@@ -92,10 +92,10 @@ class ResExtract:
         return None
 
     def getEmail(self):
-        return re.findall("([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)",self.text)
+        return re.findall(r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", self.text)
 
     def getPhoneNumber(self):
-        return  list(re.findall("[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]",self.text)) #if int(num.replace(" ","").split["-"][0]) not in range(1980,2022) ]
+        return list(re.findall(r"[\+\(]?[1-9][0-9 .\-\(\)]{8,}[0-9]", self.text))
     
     def __addEducation(self,educList,title,regex,resume):
         if re.compile(regex).findall(resume):

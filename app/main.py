@@ -2,7 +2,6 @@ import asyncio
 from pyexpat import model
 from flask import Flask, render_template, session
 #from validators import email
-from api_prediction.api_app import api_app
 from api_resume.services.resume_service import get_all_countries_cvs, get_countries_homepage, get_languages , get_all_skills_cvs, get_languages_homepage
 from api_skills.skills_app import skills_app
 from admin.auth_app import auth_app
@@ -20,7 +19,6 @@ app = Flask(__name__)
 app.config.from_object(Config)
 db.init_app(app)
 
-app.register_blueprint(api_app, url_prefix="/api/pred")
 app.register_blueprint(skills_app, url_prefix="/skills")
 app.register_blueprint(auth_app, url_prefix="/admin")
 app.register_blueprint(resume_app, url_prefix="/resume")

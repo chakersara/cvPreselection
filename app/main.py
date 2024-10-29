@@ -9,8 +9,7 @@ from api_resume.resume_app import resume_app
 from api_resume.services.extract import ResExtract
 from admin.auth_service import return_admin
 from service import login_required, edit_picture, super_admin_required
-from models import db
-from models.resumeEntity import Education, Resume, Email
+from models.resumeEntity import Skill, Education, Email, Phone, Resume, db
 from config import Config
 
 
@@ -23,14 +22,45 @@ app.register_blueprint(skills_app, url_prefix="/skills")
 app.register_blueprint(auth_app, url_prefix="/admin")
 app.register_blueprint(resume_app, url_prefix="/resume")
 
+# Initialize skills and education data
+def initialize_data():
+    skills = [
+        'Python', 'Java', 'JavaScript', 'C#', 'C++', 'PHP', 'SQL', 'HTML', 'CSS', 'React',
+        'Angular', 'Vue.js', 'Django', 'Flask', 'Ruby on Rails', 'ASP.NET', 'Node.js',
+        'Express.js', 'Spring Boot', 'Kotlin', 'Swift', 'R', 'MATLAB', 'Git', 'Docker',
+        'Kubernetes', 'AWS', 'Azure', 'GCP', 'Terraform', 'AutoCAD', 'Excel','Revit', 'Civil 3D',
+        'STAAD Pro', 'ETABS', 'SAP2000', 'Primavera', 'MS Project', 'Structural Analysis',
+        'Geotechnical Engineering', 'Surveying', 'Concrete Design', 'Steel Design',
+        'Project Management', 'Construction Estimation', 'Quantity Surveying',
+        'Blueprint Reading', 'Safety Management', 'GIS', 'ArcGIS'
+    ]
+
+    education_levels = ['Licence', 'Mastère', 'Ingénierie']
+
+    # Add skills to the database
+    for skill_name in skills:
+        if not Skill.query.filter_by(skill_name=skill_name).first():
+            new_skill = Skill(name=skill_name)
+            db.session.add(new_skill)
+
+    # Add education levels to the database
+    for degree in education_levels:
+        if not Education.query.filter_by(degree=degree).first():
+            new_education = Education(degree=degree)
+            db.session.add(new_education)
+
+    db.session.commit()
+
 with app.app_context():
     db.create_all()
+    initialize_data()
 
 
 @app.route("/create")
 @super_admin_required
 def create():
     db.create_all()
+    initialize_data()
     return "created"
 
 

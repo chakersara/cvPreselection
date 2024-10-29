@@ -1,5 +1,4 @@
 import pytest
-from flask import Flask
 from api_resume.services.extract import ResExtract
 from main import app 
 

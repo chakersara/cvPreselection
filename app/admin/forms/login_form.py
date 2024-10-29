@@ -15,6 +15,5 @@ class LoginForm(FlaskForm):
             raise ValidationError(message='Adresse e-mail non trouvée')
 
     def validate_password(self,password):
-        print("salut",self.password.data,Admin.query.filter_by(email=self.email.data).first().password)
         if check_email_exist(email=self.email.data) and not check_admin(email=self.email.data,password=self.password.data):
             raise ValidationError('Mot de passe incorrecte')

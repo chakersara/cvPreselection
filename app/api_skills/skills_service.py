@@ -40,7 +40,8 @@ def add_skill(skill_name):
 
 def find_skills(search):
     if not search.isdigit():
-        return Skill.query.filter(Skill.skill_name.like("{1}{2}{1}".format("%",search)) ).all()
+        return Skill.query.filter(Skill.skill_name.like("{0}{1}{0}".format("%", search))).all()
     return Skill.query.filter((
-            Skill.skill_name.like("{1}{2}{1}".format("%",search)) |
-            Skill.id_skill==int(search))).all()
+        Skill.skill_name.like("{0}{1}{0}".format("%", search)) |
+        Skill.id_skill == int(search)
+    )).all()

@@ -40,48 +40,29 @@ def test_find_skills(client):
     assert len(found_skills) > 0
     assert found_skills[0].skill_name == skill_name
 
+def test_delete_skill(client):
+    """Integration test for deleting a skill"""
+    skill_name = "testskill"
+    skill = Skill.query.filter_by(skill_name=skill_name).first()
 
-# def test_delete_skill(client):
-#     """Integration test for deleting a skill"""
-#     skill_name = "testskill"
-#     new_skill = add_skill(skill_name)
-#     skill_id = new_skill.id_skill
-#     delete_skill_by_id(skill_id)
-#     assert Skill.query.get(skill_id) is None
-#     skill_name = "testskill"
-#     try:
-#         new_skill = add_skill(skill_name)
-#         skill_id = new_skill.id_skill
-#         delete_skill_by_id(skill_id)
-#         assert Skill.query.get(skill_id) is None
-#     except IntegrityError as e:
-#         pytest.fail(f"IntegrityError occurred: {e}")
+    if skill:
+        skill_id = skill.id_skill
+        delete_skill_by_id(skill_id)
 
-# def test_resume_add(client):
-#     """Integration test for adding a resume"""
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         resume = Resume.query.first()
-#         assert resume is not None
-#     finally:
-#         if resume:
-#             resume_del(resume.id_resume)
-#     resume_file = FileStorage(
-#         stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
-#         filename='test_resume.pdf',
-#         content_type='application/pdf'
-#     )
-#     try:
-#         resume_add(resume_file)
-#         assert Resume.query.first() is not None
-#     except IntegrityError as e:
-#         pytest.fail(f"IntegrityError occurred: {e}")
+        assert db.session.get(Skill, skill_id) is None
+    else:
+        pytest.fail(f"Skill '{skill_name}' not found, cannot delete.")
 
+
+def test_resume_add(client):
+    """Integration test for adding a resume"""
+    resume_file = FileStorage(
+        stream=open(os.path.join(os.path.dirname(__file__), '../test_resume.pdf'), 'rb'),
+        filename='test_resume.pdf',
+        content_type='application/pdf'
+    )
+    resume = resume_add(resume_file)
+   
 # def test_resume_delete(client):
 #     """Integration test for deleting a resume"""
 #     resume_file = FileStorage(

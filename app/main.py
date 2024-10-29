@@ -1,7 +1,7 @@
 import asyncio
 from pyexpat import model
 from flask import Flask, render_template, session
-#from validators import email
+from sqlalchemy.exc import IntegrityError
 from api_resume.services.resume_service import get_all_countries_cvs, get_countries_homepage, get_languages , get_all_skills_cvs, get_languages_homepage
 from api_skills.skills_app import skills_app
 from admin.auth_app import auth_app
@@ -23,44 +23,53 @@ app.register_blueprint(auth_app, url_prefix="/admin")
 app.register_blueprint(resume_app, url_prefix="/resume")
 
 # Initialize skills and education data
-def initialize_data():
-    skills = [
-        'Python', 'Java', 'JavaScript', 'C#', 'C++', 'PHP', 'SQL', 'HTML', 'CSS', 'React',
-        'Angular', 'Vue.js', 'Django', 'Flask', 'Ruby on Rails', 'ASP.NET', 'Node.js',
-        'Express.js', 'Spring Boot', 'Kotlin', 'Swift', 'R', 'MATLAB', 'Git', 'Docker',
-        'Kubernetes', 'AWS', 'Azure', 'GCP', 'Terraform', 'AutoCAD', 'Excel','Revit', 'Civil 3D',
-        'STAAD Pro', 'ETABS', 'SAP2000', 'Primavera', 'MS Project', 'Structural Analysis',
-        'Geotechnical Engineering', 'Surveying', 'Concrete Design', 'Steel Design',
-        'Project Management', 'Construction Estimation', 'Quantity Surveying',
-        'Blueprint Reading', 'Safety Management', 'GIS', 'ArcGIS'
-    ]
+# def initialize_data():
+#     skills = [
+#         'Python', 'Java', 'JavaScript', 'C#', 'C++', 'PHP', 'SQL', 'HTML', 'CSS', 'React',
+#         'Angular', 'Vue.js', 'Django', 'Flask', 'Ruby on Rails', 'ASP.NET', 'Node.js',
+#         'Express.js', 'Spring Boot', 'Kotlin', 'Swift', 'R', 'MATLAB', 'Git', 'Docker',
+#         'Kubernetes', 'AWS', 'Azure', 'GCP', 'Terraform', 'AutoCAD', 'Excel', 'Revit', 'Civil 3D',
+#         'STAAD Pro', 'ETABS', 'SAP2000', 'Primavera', 'MS Project', 'Structural Analysis',
+#         'Geotechnical Engineering', 'Surveying', 'Concrete Design', 'Steel Design',
+#         'Project Management', 'Construction Estimation', 'Quantity Surveying',
+#         'Blueprint Reading', 'Safety Management', 'GIS', 'ArcGIS'
+#     ]
 
-    education_levels = ['Licence', 'Mastère', 'Ingénierie']
+#     education_levels = ['Licence', 'Mastère', 'Ingénierie']
 
-    # Add skills to the database
-    for skill_name in skills:
-        if not Skill.query.filter_by(skill_name=skill_name).first():
-            new_skill = Skill(name=skill_name)
-            db.session.add(new_skill)
+#     # Add skills to the database
+#     for skill_name in skills:
+#         if not Skill.query.filter_by(skill_name=skill_name).first():
+#             try:
+#                 new_skill = Skill(skill_name=skill_name)
+#                 db.session.add(new_skill)
+#                 db.session.commit()
+#             except IntegrityError:
+#                 db.session.rollback()
+#                 print(f"Skill '{skill_name}' already exists or another integrity error occurred.")
 
-    # Add education levels to the database
-    for degree in education_levels:
-        if not Education.query.filter_by(degree=degree).first():
-            new_education = Education(degree=degree)
-            db.session.add(new_education)
+#     # Add education levels to the database
+#     for degree in education_levels:
+#         if not Education.query.filter_by(degree=degree).first():
+#             try:
+#                 new_education = Education(degree=degree)
+#                 db.session.add(new_education)
+#                 db.session.commit()
+#             except IntegrityError:
+#                 db.session.rollback()
+#                 print(f"Education level '{degree}' already exists or another integrity error occurred.")
 
-    db.session.commit()
 
 with app.app_context():
     db.create_all()
-    initialize_data()
+    # initialize_data()
 
 
 @app.route("/create")
 @super_admin_required
 def create():
     db.create_all()
-    initialize_data()
+    # initialize_data()
     return "created"
 
 

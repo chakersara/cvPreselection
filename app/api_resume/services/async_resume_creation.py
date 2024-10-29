@@ -31,6 +31,8 @@ async def save_resume(path_file,path_image,path):
     task_phones=asyncio.create_task(get_phone(ext,res))
     task_email=asyncio.create_task(get_emails(ext,res))
     task_language=asyncio.create_task(get_language(ext))
+    print("nına")
+
     task_skills=asyncio.create_task(get_skills(ext))
     task_education=asyncio.create_task(get_education(ext))
     country,language,phones,emails,skills,education=\
@@ -39,6 +41,7 @@ async def save_resume(path_file,path_image,path):
     res.language=language
     res.educations.extend(education)
     res.skills.extend(skills)
+    print("nına")
     db.session.add(res)
     db.session.add_all(phones)
     db.session.add_all(emails)

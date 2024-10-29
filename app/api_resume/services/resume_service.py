@@ -35,28 +35,30 @@ def resume_add(file):
         file.save(os.path.join(path))
         image_name = file_filename.split(".")[0]
         convert2img(file_filename, image_name)
-        createResume(path, file_filename, image_name+".jpeg")
+        resume = createResume(path, file_filename, image_name+".jpeg")
         save_resume(path=path,path_image=image_name+".jpeg",path_file=file_filename)
+        return resume
     except Exception as ex:
         print(ex)
 
 
 def createResume(path, file, imagefile):
     extract = ResExtract(path)
-    res = Resume(
+    resume = Resume(
         path_file=file,
         path_image=imagefile,
         language=extract.language,
         country=extract.getCountry()
     )
-    res.educations.extend(extract.getEducation())
-    res.skills.extend(extract.getSkills())
-    emails = [Email(email=email, resume=res) for email in extract.getEmail()]
-    phone = [Phone(number=num, resume=res) for num in extract.getPhoneNumber()]
-    db.session.add(res)
+    resume.educations.extend(extract.getEducation())
+    resume.skills.extend(extract.getSkills())
+    emails = [Email(email=email, resume=resume) for email in extract.getEmail()]
+    phone = [Phone(number=num, resume=resume) for num in extract.getPhoneNumber()]
+    db.session.add(resume)
     db.session.add_all(phone)
     db.session.add_all(emails)
     db.session.commit()
+    return resume
 
 
 def get_all_education_cvs():

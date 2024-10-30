@@ -282,6 +282,6 @@ resume.csv
 .vscode
 jdid.html
 
-resumes/img
-resumes/pdf_dox
-resumes/*.pdf
+# Ignore all .jpg, .pdf, and .dcx files in app/static/resumes/
+app/static/resumes/**/*.jpeg
+app/static/resumes/*.pdf

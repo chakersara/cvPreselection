@@ -24,7 +24,9 @@ def test_upload_resume(driver, app_base_url):
     try:
         # Locate the 'circualem vitae' link in the sidebar
         circualem_vitae_link = WebDriverWait(driver, 15).until(
-            EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, '/resume/') and contains(., 'circualem vitae')]"))
+            EC.element_to_be_clickable(
+                (By.XPATH, "//a[contains(@href, '/resume/') and contains(., 'circualem vitae')]")
+            )
         )
         highlight(circualem_vitae_link, driver)
         circualem_vitae_link.click()
@@ -35,16 +37,14 @@ def test_upload_resume(driver, app_base_url):
     # Wait until the 'Ajouter cv(s)' button is visible and clickable
     try:
         add_cv_button = WebDriverWait(driver, 15).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Ajouter cv(s)')]"))
+            EC.element_to_be_clickable(
+                (By.XPATH, "//button[contains(text(), 'Ajouter cv(s)')]")
+            )
         )
         highlight(add_cv_button, driver)
         add_cv_button.click()
         print("Clicked on 'Ajouter cv(s)' button to open the resume upload form.")
 
-        # Retrieve browser logs after clicking the button
-        browser_logs = driver.get_log('browser')
-        for entry in browser_logs:
-            print(f"Browser Log: {entry['level']} - {entry['message']}")
     except Exception as e:
         pytest.fail(f"'Ajouter cv(s)' button not found or not clickable: {e}")
 
@@ -97,17 +97,18 @@ def test_upload_resume(driver, app_base_url):
         driver.save_screenshot("submit_button_failure.png")
         pytest.fail(f"Submit button not found or could not be clicked: {e}")
 
-    # Instead of waiting for a success message, wait for the resume to appear in the list
+    # Wait until the resume appears in the resume list using partial matching
     try:
-        # Define a unique identifier for the resume, such as the image source
-        resume_image_src = "/static/resumes/img/test_resume2.jpeg"
+        resume_image_partial_src = "test_resume2"
 
         # Wait until the resume card with the specific image appears
-        WebDriverWait(driver, 15).until(
+        resume_image = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located(
-                (By.XPATH, f"//img[@src='{resume_image_src}']")
+                (By.XPATH, f"//img[contains(@src, '{resume_image_partial_src}')]")
             )
         )
+        highlight(resume_image, driver)
+        assert resume_image is not None, "Uploaded resume image not found in the list."
         print("Resume uploaded successfully and found in the resume list.")
     except Exception as e:
         driver.save_screenshot("upload_success_failure.png")

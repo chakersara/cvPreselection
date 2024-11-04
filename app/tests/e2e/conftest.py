@@ -86,7 +86,6 @@ def login(driver, app_base_url, test_user_credentials):
     except Exception as e:
         pytest.fail(f"Login failed or sidebar not loaded: {e}")
 
-    # Optional: Verify user profile is displayed
     try:
         profile_name = WebDriverWait(driver, 15).until(
             EC.visibility_of_element_located((By.CLASS_NAME, "profile-name"))

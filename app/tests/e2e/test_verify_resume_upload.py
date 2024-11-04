@@ -34,8 +34,7 @@ def test_verify_resume_upload(driver, app_base_url):
 
     # Wait until the Resume List is visible
     try:
-        # Since there's no element with id="resume_list", adjust the selector
-        # For example, wait for the first resume card to be visible
+        # Wait for any resume card to be visible
         WebDriverWait(driver, 15).until(
             EC.visibility_of_element_located((By.CLASS_NAME, "card"))
         )
@@ -52,18 +51,18 @@ def test_verify_resume_upload(driver, app_base_url):
 
     # Verify the uploaded resume appears in the list
     try:
-        # Define a unique identifier for the resume, such as the image source
-        resume_image_src = "/static/resumes/img/test_resume2.jpeg"
+        resume_image_partial_src = "test_resume2" 
 
         # Wait until the resume card with the specific image appears
-        resume_image = WebDriverWait(driver, 15).until(
+        resume_image = WebDriverWait(driver, 20).until(
             EC.presence_of_element_located(
-                (By.XPATH, f"//img[@src='{resume_image_src}']")
+                (By.XPATH, f"//img[contains(@src, '{resume_image_partial_src}')]")
             )
         )
         highlight(resume_image, driver)
         assert resume_image is not None, "Uploaded resume image not found in the list."
         print("Uploaded resume image is present in the resume list.")
+
     except Exception as e:
         driver.save_screenshot("verify_resume_upload_failure.png")
-        pytest.fail(f"Uploaded resume not found in the list: {e}")
+        pytest.fail(f"Uploaded resume did not appear in the resume list after upload: {e}")

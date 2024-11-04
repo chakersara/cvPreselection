@@ -30,8 +30,9 @@ def resume_add(file):
     try:
         file_filename = secure_filename(file.filename)
         while os.path.isfile(f'{Config.UPLOAD_RESUMES}{file_filename}'):
-            file_filename = f"{randint(0, 100)}_{file_filename}"
+            file_filename = f"/{randint(0, 100)}_{file_filename}"
         path = f'{Config.UPLOAD_RESUMES}{file_filename}'
+        print("path=",path,"UPLOAD_RESUMES:",Config.UPLOAD_RESUMES,"file_filename=",file_filename)
         file.save(os.path.join(path))
         image_name = os.path.splitext(file_filename)[0]
         convert2img(file_filename, image_name)

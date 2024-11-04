@@ -50,15 +50,27 @@ class ResExtract:
         pass
     @property
     def filtered_token(self):
+        """
+        Tokenizes the text and filters out stopwords and punctuation.
+        Returns a set of significant words.
+        """
         txt_tok=word_tokenize(self.text)
         return {w for w in txt_tok if w not in self.stopWords.union(self.punctuation)}
 
     @property 
     def composed_filtered_token(self):
+        """
+        Tokenizes the text and filters out stopwords and punctuation.
+        Returns a set of significant words.
+        """
         return set(map(' '.join, nltk.everygrams(self.filtered_token, 2, 4)))
     
     @property
     def all_filtered_tokens(self):
+        """
+        Combines single tokens and composed tokens.
+        Returns a unified set of all significant tokens.
+        """        
         return self.filtered_token.union(self.composed_filtered_token)
     
     def __file_list(self,fileName):
@@ -66,10 +78,18 @@ class ResExtract:
 
 
     def __intersection_text_set(self,givenSet):
+        """
+        Finds the intersection between the filtered tokens and a given set.
+        Returns a set of matching elements.
+        """
         oneTofour_token=self.filtered_token.union(self.composed_filtered_token)
         return {elem.lower() for elem in oneTofour_token if elem.lower() in givenSet}
 
     def __stemmedList(self,toStem):
+        """
+        Applies Porter stemming to a list of words.
+        Returns a list of stemmed words in lowercase.
+        """
         return list(map(lambda w: PorterStemmer().stem(w).lower(),toStem))
 
     def __english_to_french(self,w):

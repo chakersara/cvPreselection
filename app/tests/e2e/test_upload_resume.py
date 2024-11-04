@@ -15,6 +15,7 @@ def highlight(element, driver, duration=0.5):
     time.sleep(duration)
     driver.execute_script("arguments[0].style.border=''", element)
 
+@pytest.mark.run(order=1)
 @pytest.mark.usefixtures("login")
 def test_upload_resume(driver, app_base_url):
     """

@@ -100,7 +100,7 @@ class ResExtract:
         return re.findall(r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", self.text)
 
     def getPhoneNumber(self):
-        return list(re.findall(r"\b[\+\(]?0[0-9 .\-\(\)]{8,}[0-9]\b", self.text))
+        return list(re.findall(r"[\+\(]?[0-9][0-9 .\-\(\)]{8,}[0-9]", self.text))
     
     def __addEducation(self, educList, title, regex, resume):
         if re.compile(regex).search(resume):

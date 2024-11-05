@@ -53,7 +53,7 @@ def test_extract_email(cv_file_path, expected_email):
 
 @pytest.mark.parametrize("cv_file_path, expected_phone", [
     ("tests/test_resume.pdf", "+212625215151"),
-    ("tests/test_resume2.pdf", "+91-7566888319")
+    ("tests/test_resume2.pdf", "+917566888319")
 ])
 def test_extract_phone_number(cv_file_path, expected_phone):
     """Test to check if phone number is extracted correctly from the CVs."""

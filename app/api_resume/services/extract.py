@@ -10,9 +10,8 @@ from nltk.stem import PorterStemmer
 from nltk.stem.snowball import FrenchStemmer
 import goslate
 import string
-from multiprocessing import Process
 from sqlalchemy import func
-
+import phonenumbers
 from models.resumeEntity import Skill,Education,Email,Phone,Resume,db
 
 class ResExtract:
@@ -120,7 +119,10 @@ class ResExtract:
         return re.findall(r"([a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", self.text)
 
     def getPhoneNumber(self):
-        return list(re.findall(r"[\+\(]?[0-9][0-9 .\-\(\)]{8,}[0-9]", self.text))
+        phone_numbers = []
+        for match in phonenumbers.PhoneNumberMatcher(self.text, None):
+            phone_numbers.append(phonenumbers.format_number(match.number, phonenumbers.PhoneNumberFormat.E164))
+        return phone_numbers
     
     def __addEducation(self, educList, title, regex, resume):
         if re.compile(regex).search(resume):

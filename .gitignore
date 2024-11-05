@@ -285,3 +285,4 @@ jdid.html
 # Ignore all .jpg, .pdf, and .dcx files in app/static/resumes/
 app/static/resumes/**/*.jpeg
 app/static/resumes/*.pdf
+app/static/resumes/pdf_docx/*.pdf
